@@ -1,23 +1,24 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+//import './App.css'; 
+
+ // Import AudioPlayer component
+import AudioPlayer from './AudioPlayer';
+import AudioPlayerMock from './AudioPlayerMock';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+      <header>
+        <div className="container text-center">
+          <h1>Playing Audio Clips</h1>
+          <h2>First Attempts at playing audio</h2>
+        </div>
       </header>
+
+      <main className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+        <AudioPlayer /> 
+      </main>
+      
     </div>
   );
 }
