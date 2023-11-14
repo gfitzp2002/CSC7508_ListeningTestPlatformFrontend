@@ -1,4 +1,3 @@
-// AudioRoutes.js
 const getAudio = async (id) => {
     const endpoint = `http://localhost:8080/api/audio/${id}`;
     const srcUrl = 'http://localhost:8080/assets/audio/';
