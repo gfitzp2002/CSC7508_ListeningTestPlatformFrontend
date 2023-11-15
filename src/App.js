@@ -1,22 +1,17 @@
 import React from 'react';
-//import './App.css'; 
-
- // Import AudioPlayer component
-import AudioPlayer from './AudioPlayer';
-import AudioPlayerMock from './AudioPlayerMock';
+import Question from './Question';
 
 function App() {
   return (
     <div className="App">
       <header>
         <div className="container text-center">
-          <h1>Playing Audio Clips</h1>
-          <h2>First Attempts at playing audio</h2>
+          <h1>Auditory Atlas</h1>
         </div>
       </header>
 
       <main className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <AudioPlayer /> 
+        <Question questionId={9}/> 
       </main>
       
     </div>

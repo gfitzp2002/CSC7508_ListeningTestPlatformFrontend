@@ -1,34 +1,50 @@
 import React, { useState, useEffect } from 'react';
-import { getAudio } from './AudioRoutes';
+import { getAudio } from './AudioService';
 
-function AudioPlayer() {
-  const [audioUrl, setAudioUrl] = useState('');
+function AudioPlayer({ referenceAudioFilename, questionAudioFilename }) {
+  const [questionAudioUrl, setQuestionAudioUrl] = useState('');
+  const [referenceAudioUrl, setReferenceAudioUrl] = useState('');
+  const [isPlaying, setIsPlaying] = useState(false);
   const audioPlayer = document.getElementById('audio-player');
 
-  const playAudio = () => {
-    audioPlayer.src = audioUrl;
-    audioPlayer.play();
+  const playAudio = (url) => {
+    if(isPlaying){
+      audioPlayer.pause(); //is currently playing - pause
+    } else {
+      audioPlayer.src = url;
+      audioPlayer.play();
+    }
+    setIsPlaying(!isPlaying); //change the state of isPlaying value
   };
 
   useEffect(() => {
-    const fetchAudio = async () => {
-      const url = await getAudio(7);
+    const fetchReferenceAudio = async () => {
+      const url = await getAudio(referenceAudioFilename);
       if (url) {
-        setAudioUrl(url);
+        setReferenceAudioUrl(url);
       }
     };
 
-    fetchAudio();
-  }, []);
+    const fetchQuestionAudio = async () => {
+      const url = await getAudio(questionAudioFilename);
+      if (url) {
+        setQuestionAudioUrl(url);
+      }
+    };
+
+    fetchReferenceAudio();
+    fetchQuestionAudio();
+  }, [referenceAudioFilename, questionAudioFilename]);
 
   return (
     <div className='container text-center'>
-      <div className='card-body'>
       <audio  id="audio-player"></audio>
-      </div>      
       <div className='mt-3'>
-        <button className='btn btn-danger' onClick={playAudio}>1kHz</button>
-      </div>
+        <button className='btn btn-danger me-2' onClick= {() => playAudio(referenceAudioUrl)}>Reference</button> 
+        {/* some conditional to change the button text? */}
+        <button className='btn btn-danger ms-2' onClick={ () => playAudio(questionAudioUrl)}> Question </button>
+        {/* some conditional to change the button text? */}
+      </div>      
     </div>
   );
 }
