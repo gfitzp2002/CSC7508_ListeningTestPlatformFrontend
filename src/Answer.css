@@ -1,0 +1,10 @@
+#answers {
+    list-style: none;
+    columns: 2;
+  }
+  
+  #answers li {
+    break-inside: avoid-column;
+    margin-bottom: 10px;
+  }
+  

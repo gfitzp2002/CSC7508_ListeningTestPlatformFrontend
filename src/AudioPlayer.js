@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { getAudio } from './AudioService';
 
-function AudioPlayer({ referenceAudioFilename, questionAudioFilename }) {
-  const [questionAudioUrl, setQuestionAudioUrl] = useState('');
-  const [referenceAudioUrl, setReferenceAudioUrl] = useState('');
+function AudioPlayer({ audioFilename }) {
+  const [audioUrl, setaudioUrl] = useState('');
   const [isPlaying, setIsPlaying] = useState(false);
   const audioPlayer = document.getElementById('audio-player');
 
@@ -18,32 +17,23 @@ function AudioPlayer({ referenceAudioFilename, questionAudioFilename }) {
   };
 
   useEffect(() => {
-    const fetchReferenceAudio = async () => {
-      const url = await getAudio(referenceAudioFilename);
+    const fetchAudio = async () => {
+      const url = await getAudio(audioFilename);
       if (url) {
-        setReferenceAudioUrl(url);
+        setaudioUrl(url);
       }
     };
-
-    const fetchQuestionAudio = async () => {
-      const url = await getAudio(questionAudioFilename);
-      if (url) {
-        setQuestionAudioUrl(url);
-      }
-    };
-
-    fetchReferenceAudio();
-    fetchQuestionAudio();
-  }, [referenceAudioFilename, questionAudioFilename]);
+    fetchAudio();
+  }, [audioFilename]);
 
   return (
     <div className='container text-center'>
       <audio  id="audio-player"></audio>
       <div className='mt-3'>
-        <button className='btn btn-danger me-2' onClick= {() => playAudio(referenceAudioUrl)}>Reference</button> 
-        {/* some conditional to change the button text? */}
-        <button className='btn btn-danger ms-2' onClick={ () => playAudio(questionAudioUrl)}> Question </button>
-        {/* some conditional to change the button text? */}
+        <button className='btn btn-danger' onClick= {() => playAudio(audioUrl)}>
+          {isPlaying ? 'Pause' : 'Play'}
+        </button> 
+
       </div>      
     </div>
   );
