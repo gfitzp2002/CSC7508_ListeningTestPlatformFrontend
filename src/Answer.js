@@ -32,7 +32,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
           </li>
         ))}
       </ul>
-      <button className='btn btn-danger' onClick={handleSubmit}>Submit</button>
+      <button className='usebtn btn-primary' onClick={handleSubmit}>Submit</button>
     </div>
   );
 }

@@ -1,5 +1,5 @@
 import React from 'react';
-import Question from './Question';
+import Quiz from './Quiz';
 
 function App() {
   return (
@@ -10,8 +10,8 @@ function App() {
         </div>
       </header>
 
-      <main className="container d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-        <Question questionId={9}/> 
+      <main className="container d-flex justify-content-center align-items-center" style={{ height: '100vh', backgroundColor: '#FCFAFA' }}>
+        <Quiz categoryId={1}/> 
       </main>
       
     </div>
