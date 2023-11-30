@@ -30,7 +30,7 @@ function AudioPlayer({ audioFilename }) {
     <div className='container text-center'>
       <audio  id="audio-player"></audio>
       <div className='mt-3'>
-        <button className='btn btn-danger' onClick= {() => playAudio(audioUrl)}>
+        <button className='btn btn-primary' onClick= {() => playAudio(audioUrl)}>
           {isPlaying ? 'Pause' : 'Play'}
         </button> 
 
