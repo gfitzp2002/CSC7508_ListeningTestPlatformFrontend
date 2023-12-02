@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Container, Form, Button, Row, Col } from 'react-bootstrap';
 import './Answer.css';
 
 function Answer({ answers, correctAnswer, onSubmission }) {
@@ -15,25 +16,26 @@ function Answer({ answers, correctAnswer, onSubmission }) {
   };
 
   return (
-    <div>
+    <Container>
       <h3>Possible Answers:</h3>
-      <ul id='answers'>
+      <Form>
+        <Row>
         {answers.map((answer) => (
-          <li key={answer.answerId}>
-            <label>
-              <input
-                type="radio"
-                value={answer.answerText}
-                checked={selectedAnswer === answer.answerText}
-                onChange={handleChange}
-              />
-              <h5>{answer.answerText}</h5>
-            </label>
-          </li>
+          <Col key={answer.answerId} md={6}>
+            <Form.Check
+              type='radio'
+              id={answer.answerId}
+              label={answer.answerText}
+              value={answer.answerText}
+              checked={selectedAnswer === answer.answerText}
+              onChange={handleChange}
+            />
+          </Col>
         ))}
-      </ul>
-      <button className='usebtn btn-primary' onClick={handleSubmit}>Submit</button>
-    </div>
+        </Row>
+      </Form>
+      <Button variant='success' onClick={handleSubmit}>Submit</Button>
+    </Container>
   );
 }
 

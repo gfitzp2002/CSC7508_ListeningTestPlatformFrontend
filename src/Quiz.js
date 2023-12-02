@@ -39,22 +39,25 @@ function Quiz({categoryId}) {
         
     };
     
-
+    if (questionIndex >= quizData.questionSet.length) {
+        // All questions answered, render ResultDisplay
+        return (
+          <main className='container text-center'>
+            <ResultDisplay results={results} />
+          </main>
+        );
+      }
 
 
     return (
         <main className='container text-center'>
-            <div>
-                <h1>Question {questionIndex + 1} of {quizData.questionSet.length}</h1>
-            </div>
-            {questionIndex < quizData.questionSet.length ? (
+                <div>
+                    <h1>Question {questionIndex + 1} of {quizData.questionSet.length}</h1>
+                </div>
                 <Question
                     questionData={quizData.questionSet[questionIndex]}
                     onSubmission={handleSubmission}
-                />              
-            ) : (
-                <ResultDisplay results={results} />
-            )}
+                />
         </main>
 
     );
