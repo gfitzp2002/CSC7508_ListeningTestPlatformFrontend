@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Button } from 'react-bootstrap';
 import { getAudio } from './AudioService';
 
 function AudioPlayer({ audioFilename }) {
@@ -27,15 +28,12 @@ function AudioPlayer({ audioFilename }) {
   }, [audioFilename]);
 
   return (
-    <div className='container text-center'>
+    <Container className='container text-center'>
       <audio  id="audio-player"></audio>
-      <div className='mt-3'>
-        <button className='btn btn-primary' onClick= {() => playAudio(audioUrl)}>
+        <Button variant='success' className='mt-3' onClick= {() => playAudio(audioUrl)}>
           {isPlaying ? 'Pause' : 'Play'}
-        </button> 
-
-      </div>      
-    </div>
+        </Button>      
+    </Container>
   );
 }
 

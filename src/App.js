@@ -1,18 +1,19 @@
 import React from 'react';
 import Quiz from './Quiz';
+import { Container } from 'react-bootstrap';
 
 function App() {
   return (
     <div className="App">
       <header>
-        <div className="container text-center">
+        <Container className="text-center">
           <h1>Auditory Atlas</h1>
-        </div>
+        </Container>
       </header>
 
-      <main className="container d-flex justify-content-center align-items-center" style={{ height: '100vh', backgroundColor: '#FCFAFA' }}>
+      <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh', backgroundColor: '#FCFAFA' }}>
         <Quiz categoryId={1}/> 
-      </main>
+      </Container>
       
     </div>
   );
