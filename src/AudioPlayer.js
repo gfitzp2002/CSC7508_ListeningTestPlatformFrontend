@@ -30,7 +30,7 @@ function AudioPlayer({ audioFilename }) {
   return (
     <Container className='container text-center'>
       <audio  id="audio-player"></audio>
-        <Button variant='success' className='mt-3' onClick= {() => playAudio(audioUrl)}>
+        <Button variant='danger' className='mt-3' onClick= {() => playAudio(audioUrl)}>
           {isPlaying ? 'Pause' : 'Play'}
         </Button>      
     </Container>
