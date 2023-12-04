@@ -1,37 +1,38 @@
 import React, { useState, useEffect } from 'react';
+import { Button } from 'react-bootstrap';
 import { getQuiz } from './QuizService';
 import Question from './Question';
 import ResultDisplay from './ResultDisplay';
-
-
 
 function Quiz({categoryId}) {
     const [quizData, setQuizData] = useState(null);
     const [questionIndex, setQuestionIndex] = useState(0);
     const [results, setResults] = useState([]);
+    const [isComplete, setIsComplete] =useState(false);
     //const [score, setScore] = useState(0); - Separate Score component? Should 1 = 10 or 100 etc?
     
-    useEffect(() => {
-        const fetchQuizData = async () => {
+    const getQuizData = async () => {
         const data = await getQuiz(categoryId);
-            if (data) {
-                setQuizData(data);
-                //initialise new results array that is equal to number of questions
-                //setResults(new Array(data.questionSet.length).fill(null));
-            }
-        };
-
-        fetchQuizData();
+        if (data) {
+            setQuizData(data);
+            setResults([]);
+            setQuestionIndex(0);
+            setIsComplete(false);
+        }
+    };
+    
+    useEffect(() => {
+        getQuizData();
     }, [categoryId]);
 
     useEffect(() => {
         console.log('Results: ' + JSON.stringify(results));
-    }, [results]);
+        if (quizData && questionIndex >= quizData.questionSet.length){
+            setIsComplete(true);
+        }
+    }, [questionIndex,results, quizData]);
 
-    if(!quizData) {
-        return <h1>Loading.....</h1>;
-    }
-
+    
     //record results in results array - to improve: map to questionId? Will need questionResponse object modified potentially
     const handleSubmission = (result) => {
         setResults((prev) => [...prev, {questionIndex, result}]);
@@ -39,15 +40,19 @@ function Quiz({categoryId}) {
         
     };
     
-    if (questionIndex >= quizData.questionSet.length) {
-        // All questions answered, render ResultDisplay
+    if(!quizData) {
+        return <h1>Loading.....</h1>;
+    }
+    
+    //If no questions left - display the final result
+    if(isComplete) {
         return (
           <main className='container text-center'>
             <ResultDisplay results={results} />
+            <Button variant='danger' onClick={getQuizData}>Play Again?</Button>
           </main>
         );
       }
-
 
     return (
         <main className='container text-center'>

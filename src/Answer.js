@@ -34,7 +34,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         ))}
         </Row>
       </Form>
-      <Button variant='success' onClick={handleSubmit}>Submit</Button>
+      <Button variant='danger' onClick={handleSubmit}>Submit</Button>
     </Container>
   );
 }
