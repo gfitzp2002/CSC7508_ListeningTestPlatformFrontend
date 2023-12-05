@@ -28,22 +28,22 @@ function Question({questionData, onSubmission}) {
     return (
         <Container className='text-center'>
         
-            <Card>
+            <Card className='mb-4'>
                 <Card.Header>
                     <h4>Press the reference audio button to hear a recording of a {questionData.referenceAudioFilename} sine wave</h4>
                 </Card.Header>
-                <Card.Body style={{ backgroundColor: '#C8D3D5'}}>
+                <Card.Body >
                     <div id='audio-buttons' className='mt-3'>
                         <AudioPlayer audioFilename={referenceAudioFile} /> 
                     </div>  
                </Card.Body>
             </Card>
 
-            <Card>
+            <Card className='mb-4'>
                 <Card.Header>
                     <h4>The question audio button is a recording of a sine wave at a specific frequency.....</h4>
                 </Card.Header>
-                <Card.Body style={{ backgroundColor: '#C8D3D5'}}>
+                <Card.Body >
                     <div id='audio-buttons' className='mt-3'>
                         <AudioPlayer audioFilename={questionAudioFile} /> 
                     </div>   
@@ -51,7 +51,7 @@ function Question({questionData, onSubmission}) {
             </Card>  
 
             <Card>
-                <Card.Body style={{ backgroundColor: '#C8D3D5'}}>
+                <Card.Body>
                     <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} />
                     {/*Print on screen whether the correct answer has been submitted */}
                     {isCorrect !== null && (

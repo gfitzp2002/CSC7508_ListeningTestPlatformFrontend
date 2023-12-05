@@ -16,7 +16,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
   };
 
   return (
-    <Container>
+    <Container >
       <h3>Possible Answers:</h3>
       <Form>
         <Row>
@@ -34,7 +34,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         ))}
         </Row>
       </Form>
-      <Button variant='danger' onClick={handleSubmit}>Submit</Button>
+      <Button variant='primary' onClick={handleSubmit}>Submit</Button>
     </Container>
   );
 }
