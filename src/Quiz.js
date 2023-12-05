@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Button } from 'react-bootstrap';
+import { Container, Button } from 'react-bootstrap';
 import { getQuiz } from './QuizService';
 import Question from './Question';
 import ResultDisplay from './ResultDisplay';
@@ -49,21 +49,21 @@ function Quiz({categoryId}) {
         return (
           <main className='container text-center'>
             <ResultDisplay results={results} />
-            <Button variant='danger' onClick={getQuizData}>Play Again?</Button>
+            <Button variant='primary' onClick={getQuizData}>Play Again?</Button>
           </main>
         );
       }
 
     return (
-        <main className='container text-center'>
-                <div>
+        <Container className='text-center' style={{ backgroundColor: '#FFE1A8' }}>
+                <Container className='mt-4 mb-4'>
                     <h1>Question {questionIndex + 1} of {quizData.questionSet.length}</h1>
-                </div>
+                </Container>
                 <Question
                     questionData={quizData.questionSet[questionIndex]}
                     onSubmission={handleSubmission}
                 />
-        </main>
+        </Container>
 
     );
 

@@ -1,9 +1,9 @@
-const getAudio = async (file) => {
-    const srcUrl = 'http://localhost:8080/assets/audio/';
+const getAudio = async (filename) => {
+    const API_URL = 'http://localhost:8080/assets/audio/';
     
     try {
 
-      const audioUrl = srcUrl + file;
+      const audioUrl = API_URL + filename;
       console.log("audio url - " + audioUrl);
 
       
