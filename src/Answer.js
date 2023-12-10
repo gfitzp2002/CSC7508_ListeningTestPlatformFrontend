@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import './Answer.css';
+import './styles/Answer.css';
 
 function Answer({ answers, correctAnswer, onSubmission }) {
   const [selectedAnswer, setSelectedAnswer] = useState('');
@@ -16,7 +16,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
   };
 
   return (
-    <Container >
+    <Container>
       <h3>Possible Answers:</h3>
       <Form>
         <Row>
@@ -34,7 +34,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         ))}
         </Row>
       </Form>
-      <Button variant='primary' onClick={handleSubmit}>Submit</Button>
+      <Button variant='danger' onClick={handleSubmit}>Submit</Button>
     </Container>
   );
 }
