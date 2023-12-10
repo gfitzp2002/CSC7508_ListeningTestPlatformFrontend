@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { getQuiz } from './QuizService';
 import Question from './Question';
+import Scoreboard from './Scoreboard';
 import ResultDisplay from './ResultDisplay';
 
 function Quiz({categoryId}) {
@@ -9,7 +10,7 @@ function Quiz({categoryId}) {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [results, setResults] = useState([]);
     const [isComplete, setIsComplete] =useState(false);
-    //const [score, setScore] = useState(0); - Separate Score component? Should 1 = 10 or 100 etc?
+    const [score, setScore] = useState(0);  //Separate Score component? Should 1 = 10 or 100 etc?
     
     const getQuizData = async () => {
         const data = await getQuiz(categoryId);
@@ -20,6 +21,9 @@ function Quiz({categoryId}) {
             setIsComplete(false);
         }
     };
+    const calculateScore = () => {
+        return results.reduce((acc, result) => (result.result ? acc + 1 : acc), 0);
+      };
     
     useEffect(() => {
         getQuizData();
@@ -30,6 +34,7 @@ function Quiz({categoryId}) {
         if (quizData && questionIndex >= quizData.questionSet.length){
             setIsComplete(true);
         }
+        setScore(calculateScore());
     }, [questionIndex,results, quizData]);
 
     
@@ -48,6 +53,7 @@ function Quiz({categoryId}) {
     if(isComplete) {
         return (
           <main className='container text-center'>
+            <Container><h1>You Scored: {score}!</h1></Container>
             <ResultDisplay results={results} />
             <Button variant='primary' onClick={getQuizData}>Play Again?</Button>
           </main>
@@ -56,8 +62,13 @@ function Quiz({categoryId}) {
 
     return (
         <Container className='text-center' style={{ backgroundColor: '#FFE1A8' }}>
+                <Container>
+
+                </Container>
                 <Container className='mt-4 mb-4'>
-                    <h1>Question {questionIndex + 1} of {quizData.questionSet.length}</h1>
+                <Scoreboard
+                        score={score}
+                    />
                 </Container>
                 <Question
                     questionData={quizData.questionSet[questionIndex]}

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Container, Card } from 'react-bootstrap';
 import AudioPlayer from './AudioPlayer';
 import Answer from './Answer';
-import './Answer.css';
+import './styles/Answer.css';
 
 function Question({questionData, onSubmission}) { 
    const[isCorrect, setIsCorrect] = useState(null); 
@@ -15,16 +15,16 @@ function Question({questionData, onSubmission}) {
             onSubmission(result);
         }
     }
-    //ensure the files have loaded before rendering
+    //ensure the files have loaded before rendering otherwise display...
     if (!questionData) {
         return <h2>Loading......</h2>
     }
 
     //concatentate the file name with the file type 
     const referenceAudioFile = questionData.referenceAudioFilename + questionData.referenceAudioFiletype; 
-    //console.log("referenceAudioFile: " + referenceAudioFile);
+
     const questionAudioFile = questionData.questionAudioFilename + questionData.questionAudioFiletype; 
-    //console.log("questionAudioFile: " + questionAudioFile);
+
     return (
         <Container className='text-center'>
         
