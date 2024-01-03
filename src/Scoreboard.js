@@ -20,9 +20,12 @@ function Scoreboard ({score}) {
       };
 
     return (
+      <Container className='text-center'>
+        <h2>Score</h2>
         <Container style={scoreboardStyle}>
-            <h2 style={numberStyle}>{score}</h2>
+          <h2 style={numberStyle}>{score}</h2>
         </Container>
+      </Container>
       );
 }
 

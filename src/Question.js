@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Container, Card } from 'react-bootstrap';
+import { Container, Card, Col, Row } from 'react-bootstrap';
 import AudioPlayer from './AudioPlayer';
 import Answer from './Answer';
 import './styles/Answer.css';
@@ -63,42 +63,50 @@ function Question({questionData, onSubmission}) {
     const questionDescription = getAudioDescription(questionData, false);
 
     return (
-        <Container className='text-center'>
-        
-            <Card className='mb-4'>
-                <Card.Header>
-                    <h4>The following reference audio file is {referenceDescription}</h4>
-                </Card.Header>
-                <Card.Body >
-                    <div id='audio-buttons' className='mt-3'>
-                        <AudioPlayer audioFilename={referenceAudioFile} /> 
-                    </div>  
-               </Card.Body>
-            </Card>
-
-            <Card className='mb-4'>
-                <Card.Header>
-                    <h4>The following question audio file is {questionDescription}...</h4>
-                </Card.Header>
-                <Card.Body >
-                    <div id='audio-buttons' className='mt-3'>
-                        <AudioPlayer audioFilename={questionAudioFile} /> 
-                    </div>   
-                </Card.Body>
-            </Card>  
-
-            <Card>
-                <Card.Body>
-                    <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} />
-                    {/*Print on screen whether the correct answer has been submitted */}
-                    {isCorrect !== null && (
-                <div>
-                    <p>Your answer is {isCorrect ? 'correct' : 'incorrect'}.</p>
-                </div>
-                )}
-                </Card.Body> 
-            </Card>
-
+        <Container className='text-center mb-3'>
+            <Row>
+                <Col>
+                    <Card className='mb-4'>
+                        <Card.Header>
+                            <h4>The following reference audio file is {referenceDescription}</h4>
+                        </Card.Header>
+                        <Card.Body >
+                            <div id='audio-buttons' className='mt-3'>
+                                <AudioPlayer audioFilename={referenceAudioFile} /> 
+                            </div>  
+                    </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Card className='mb-4'>
+                        <Card.Header>
+                            <h4>The following question audio file is {questionDescription}...</h4>
+                        </Card.Header>
+                        <Card.Body >
+                            <div id='audio-buttons' className='mt-3'>
+                                <AudioPlayer audioFilename={questionAudioFile} /> 
+                            </div>   
+                        </Card.Body>
+                    </Card> 
+                </Col> 
+            </Row>
+            <Row>
+                <Col>
+                    <Card>
+                        <Card.Body>
+                            <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} />
+                            {/*Print on screen whether the correct answer has been submitted */}
+                            {isCorrect !== null && (
+                        <div>
+                            <p>Your answer is {isCorrect ? 'correct' : 'incorrect'}.</p>
+                        </div>
+                        )}
+                        </Card.Body> 
+                    </Card>
+                </Col>
+            </Row>
         </Container>
     );
     }
