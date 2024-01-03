@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button } from 'react-bootstrap';
+import { Container, Button, Row, Col } from 'react-bootstrap';
 import { getQuiz } from './QuizService';
 import Question from './Question';
 import Scoreboard from './Scoreboard';
@@ -63,18 +63,31 @@ function Quiz({categoryId}) {
       }
 
     return (
-        <Container className='text-center' style={{ backgroundColor: '#FFE1A8' }}>
-                <Container className='mt-4 mb-4'>
-                <Scoreboard
-                        score={score}
+        
+        <Container className='text-center'>
+            <Row className='mb-5'> 
+                <Col>
+                    <h2>{quizData.categoryName}</h2>
+                </Col>
+            </Row>
+            <Container style={{ backgroundColor: '#FFE1A8' }}>    
+            <Row>
+                <Col>                                            
+                    <Scoreboard
+                            score={score}
+                    />                    
+                </Col>
+            </Row>
+            <Row>
+                <Col>
+                    <Question
+                        questionData={quizData.questionSet[questionIndex]}
+                        onSubmission={handleSubmission}
                     />
-                </Container>
-                <Question
-                    questionData={quizData.questionSet[questionIndex]}
-                    onSubmission={handleSubmission}
-                />
+                </Col>
+            </Row>
+            </Container> 
         </Container>
-
     );
 
 }

@@ -14,5 +14,5 @@ const getAudio = async (filename) => {
     }
   };
   
-  export { getAudio };
+export { getAudio };
   
