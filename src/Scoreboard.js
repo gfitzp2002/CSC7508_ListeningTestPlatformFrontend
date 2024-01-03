@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Container } from 'react-bootstrap';
 
 function Scoreboard ({score}) {
@@ -15,7 +15,7 @@ function Scoreboard ({score}) {
       };
     
       const numberStyle = {
-        fontSize: '24px', // Adjust font size as needed
+        fontSize: '24px', 
         fontWeight: 'bold',
       };
 
