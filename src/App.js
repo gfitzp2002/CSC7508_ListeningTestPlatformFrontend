@@ -21,7 +21,7 @@ function App() {
       <main >
       <Container className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
           {isLoggedIn ? (
-            <Quiz categoryId={1} />
+            <Quiz categoryId={2} />
           ) : (
             <Login onLoginSuccess={handleLoginSuccess} />
           )}

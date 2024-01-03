@@ -10,7 +10,7 @@ function Quiz({categoryId}) {
     const [questionIndex, setQuestionIndex] = useState(0);
     const [results, setResults] = useState([]);
     const [isComplete, setIsComplete] =useState(false);
-    const [score, setScore] = useState(0);  //Separate Score component? Should 1 = 10 or 100 etc?
+    const [score, setScore] = useState(0);
     
     const getQuizData = async () => {
         const data = await getQuiz(categoryId);
@@ -21,6 +21,7 @@ function Quiz({categoryId}) {
             setIsComplete(false);
         }
     };
+    
     const calculateScore = () => {
         return results.reduce((acc, result) => (result.result ? acc + 1 : acc), 0);
       };
@@ -44,7 +45,8 @@ function Quiz({categoryId}) {
         setQuestionIndex((prev) => prev + 1);
         
     };
-    
+
+    //loading screen if now data
     if(!quizData) {
         return <h1>Loading.....</h1>;
     }
@@ -62,9 +64,6 @@ function Quiz({categoryId}) {
 
     return (
         <Container className='text-center' style={{ backgroundColor: '#FFE1A8' }}>
-                <Container>
-
-                </Container>
                 <Container className='mt-4 mb-4'>
                 <Scoreboard
                         score={score}

@@ -17,6 +17,7 @@ function AudioPlayer({ audioFilename }) {
     setIsPlaying(!isPlaying); //change the state of isPlaying value
   };
 
+  //sets the audioUrl when audioFilename is updated
   useEffect(() => {
     const fetchAudio = async () => {
       const url = await getAudio(audioFilename);
