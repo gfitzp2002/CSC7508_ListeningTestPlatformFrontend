@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
-import { getQuiz } from './QuizService';
+import { getQuiz } from '../service/QuizService';
 import Question from './Question';
 import Scoreboard from './Scoreboard';
 import ResultDisplay from './ResultDisplay';
