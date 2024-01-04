@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button, Row, Col } from 'react-bootstrap';
 import { getQuiz } from '../service/QuizService';
-import Question from './Question';
-import Scoreboard from './Scoreboard';
-import ResultDisplay from './ResultDisplay';
+import Question from '../components/Question';
+import Scoreboard from '../components/Scoreboard';
+import ResultDisplay from '../components/ResultDisplay';
 
 function Quiz({categoryId}) {
     const [quizData, setQuizData] = useState(null);
