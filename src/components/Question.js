@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Card, Col, Row } from 'react-bootstrap';
-import AudioPlayer from './AudioPlayer';
-import Answer from './Answer';
-import './styles/Answer.css';
+import AudioPlayer from '../components/AudioPlayer';
+import Answer from '../components/Answer';
+import '../styles/Answer.css';
 
 function Question({questionData, onSubmission}) { 
    const[isCorrect, setIsCorrect] = useState(null); 

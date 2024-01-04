@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
-import Quiz from './Quiz';
-import NavBar from './NavBar';
-import Welcome from './Welcome';
+import Quiz from './components/Quiz';
+import NavBar from './components/NavBar';
+import Welcome from './components/Welcome';
 import { Container, Image, Row, Col } from 'react-bootstrap';
-import Login from './Login';
+import Login from './components/Login';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
@@ -29,7 +29,7 @@ function App() {
   };
 
   return (
-    <Container className="App" style={{ backgroundColor: '#65afb4' }} fluid>
+    <Container className="App" fluid>
       <Row className="text-center">
         <Col>
           <header>            

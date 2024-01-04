@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Container, Button } from 'react-bootstrap';
-import { getAudio } from './AudioService';
+import { getAudio } from '../service/AudioService';
 
 function AudioPlayer({ audioFilename }) {
   const [audioUrl, setaudioUrl] = useState('');

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import './styles/Answer.css';
+import '../styles/Answer.css';
 
 function Answer({ answers, correctAnswer, onSubmission }) {
   const [selectedAnswer, setSelectedAnswer] = useState('');
 
-  const handleChange = (event) => {
-    setSelectedAnswer(event.target.value);
+  const handleChange = (input) => {
+    const answerText = typeof input === 'string' ? input : input.target.value;
+    setSelectedAnswer(answerText);
   };
 
   const handleSubmit = () => {
@@ -22,7 +23,11 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         <Row>
         {answers.map((answer) => (
           <Col key={answer.answerId} md={6}>
-            <Form.Check
+            <div 
+            className='radio-highlight'
+            onClick={() => handleChange(answer.answerText)}
+            >
+            <Form.Check              
               type='radio'
               id={answer.answerId}
               label={answer.answerText}
@@ -30,6 +35,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
               checked={selectedAnswer === answer.answerText}
               onChange={handleChange}
             />
+            </div>
           </Col>
         ))}
         </Row>

@@ -1,10 +1,20 @@
 #answers {
-    list-style: none;
-    columns: 2;
+  list-style: none;
+  columns: 2;
   }
   
-  #answers li {
-    break-inside: avoid-column;
-    margin-bottom: 10px;
-  }
+#answers li {
+  break-inside: avoid-column;
+  margin-bottom: 10px;  
+}
+
+.radio-highlight:hover {
+  background-color: #f0f0f0; /* Light grey background on hover */
+  cursor: pointer;
+}
+
+/* Adjust space between radio button and label */
+.form-check-input {
+  margin-right: 0.25rem; /* Adjust as needed */
+}
   

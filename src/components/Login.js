@@ -1,25 +1,26 @@
 import React, { useState } from 'react';
+import LoginService from '../service/LoginService';
+import LoginModel from '../models/LoginModel';
 import { Button, Container, Form } from 'react-bootstrap';
-import UserModel from './models/UserModel';
 
-function SignUpForm() {
-const [userData, setUserData] = useState(new UserModel('', ''));
+function Login({onLoginSuccess}) {
+const [loginData, setLoginData] = useState(new LoginModel('', ''));
 
 const handleUsernameChange = (e) => {
-    setUserData((prevUserData) => ({
+    setLoginData((prevLoginData) => ({
     ...prevLoginData,
     username: e.target.value,
     }));
 };
 
 const handlePasswordChange = (e) => {
-    setUserData((prevUserData) => ({
+    setLoginData((prevLoginData) => ({
     ...prevLoginData,
     password: e.target.value,
     }));
 };
 
-  const handleSubmit = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
