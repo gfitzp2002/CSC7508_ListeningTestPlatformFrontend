@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Button, Row, Col } from 'react-bootstrap';
+import { Container, Button, Row, Col, } from 'react-bootstrap';
 import { getQuiz } from '../service/QuizService';
+import { QuizProvider } from '../context/QuizContext';
 import Question from '../components/Question';
 import Scoreboard from '../components/Scoreboard';
 import ResultDisplay from '../components/ResultDisplay';
@@ -63,7 +64,7 @@ function Quiz({categoryId}) {
       }
 
     return (
-        
+        <QuizProvider>
         <Container className='text-center'>
             <Row className='mb-5'> 
                 <Col>
@@ -73,9 +74,7 @@ function Quiz({categoryId}) {
             <Container style={{ backgroundColor: '#FFE1A8' }}>    
             <Row>
                 <Col>                                            
-                    <Scoreboard
-                            score={score}
-                    />                    
+                    <Scoreboard score={score} />                    
                 </Col>
             </Row>
             <Row>
@@ -88,6 +87,7 @@ function Quiz({categoryId}) {
             </Row>
             </Container> 
         </Container>
+        </QuizProvider>
     );
 
 }

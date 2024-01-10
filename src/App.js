@@ -4,10 +4,12 @@ import NavBar from './components/NavBar';
 import Welcome from './components/Welcome';
 import { Container, Image, Row, Col } from 'react-bootstrap';
 import Login from './components/Login';
+import { MessageProvider } from './context/MessageContext';
 
 function App() {
   const [isLoggedIn, setLoggedIn] = useState(false);
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
+ 
 
   const handleLoginSuccess = () => {
     setLoggedIn(true);
@@ -29,6 +31,7 @@ function App() {
   };
 
   return (
+    <MessageProvider>
     <Container className="App" fluid>
       <Row className="text-center">
         <Col>
@@ -43,11 +46,12 @@ function App() {
           <main >
             <Container className="d-flex align-items-center mb-3">
                 {renderContent()}
-              </Container>
+            </Container>
           </main>
         </Col>
       </Row> 
     </Container>
+    </MessageProvider>
   );
 }
 
