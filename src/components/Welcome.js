@@ -7,7 +7,7 @@ function Welcome() {
     <Container className='text-center'>
         <Row>
             <Col>
-                <h2>Welcome to the Quiz App!</h2>
+                <h2>Welcome to the Aural Atlas!</h2>
             </Col>
         </Row>
         <Row>

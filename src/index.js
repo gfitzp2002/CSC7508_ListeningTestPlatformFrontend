@@ -9,7 +9,7 @@ import { Container } from 'react-bootstrap';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Container style={{ minHeight: '100vh', backgroundColor: '#65afb4'  }}>
+    <Container style={{ minHeight: '100vh', backgroundColor: '#65afb4'  }} fluid>
       <App />
     </Container>
   </React.StrictMode>

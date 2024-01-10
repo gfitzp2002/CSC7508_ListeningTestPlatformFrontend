@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getCategories } from '../service/QuizService';
-import { Navbar, Nav, Dropdown, Container, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 
 function NavBar({ onCategorySelect }) {
   const [categories, setCategories] = useState([]);
@@ -12,7 +12,7 @@ function NavBar({ onCategorySelect }) {
     };
 
     fetchCategories();
-    console.log("Categories" + categories);
+    
   }, []);
 
   return (
