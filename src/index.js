@@ -5,13 +5,16 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Container } from 'react-bootstrap';
+import { AuthProvider } from './context/AuthContext';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Container style={{ minHeight: '100vh', backgroundColor: '#65afb4'  }} fluid>
-      <App />
-    </Container>
+    <AuthProvider>
+      <Container style={{ minHeight: '100vh', backgroundColor: '#65afb4'  }} fluid>
+        <App />
+      </Container>
+    </AuthProvider>
   </React.StrictMode>
 );
 

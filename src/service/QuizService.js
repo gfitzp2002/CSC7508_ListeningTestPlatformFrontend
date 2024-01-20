@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from './AxiosConfig';
 
-const QUIZ_URL = 'http://localhost:8080/api/quiz';
-const CATEGORY_URL = 'http://localhost:8080/api/quiz/categories';
+const QUIZ_URL = '/quiz';
+const CATEGORY_URL = 'quiz/categories';
 
 const getQuiz = async (categoryId) => {
   try {

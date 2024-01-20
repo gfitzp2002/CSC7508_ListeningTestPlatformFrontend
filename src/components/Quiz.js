@@ -66,12 +66,13 @@ function Quiz({categoryId}) {
     return (
         <QuizProvider>
         <Container className='text-center'>
-            <Row className='mb-5'> 
+ 
+            <Container style={{ backgroundColor: '#FFE1A8' }}>   
+            <Row className='mb-5 mt-5'> 
                 <Col>
                     <h2>{quizData.categoryName}</h2>
                 </Col>
-            </Row>
-            <Container style={{ backgroundColor: '#FFE1A8' }}>    
+            </Row> 
             <Row>
                 <Col>                                            
                     <Scoreboard score={score} />                    

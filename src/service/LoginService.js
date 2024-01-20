@@ -1,13 +1,13 @@
-import axios from 'axios';
+import axios from './AxiosConfig';
 
-const API_URL = 'http://localhost:8080/api/login';
+const API_URL = '/login';
 
 const LoginService = {
   login: async (loginData) => {
     try {
       const response = await axios.post(`${API_URL}`, loginData);
       console.log(response);
-      return response.data; // Assuming the backend returns a token upon successful login
+      return response.data; 
     } catch (error) {
       throw error.response?.data || error.message;
     }

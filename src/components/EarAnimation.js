@@ -5,8 +5,8 @@ import incorrectImage from '../images/earSad.png';
 
 const EarAnimation = ({ isCorrect }) => {
     const animationProps = useSpring({
-        to: { opacity: isCorrect !== null ? 1 : 0, transform: 'scale(1)', y:0 },
-        from: { opacity: 0, transform: 'scale(0)', y:90 },
+        to: { opacity: isCorrect !== null ? 1 : 0, transform: 'scale(1)', y:10 },
+        from: { opacity: 0, transform: 'scale(0)', y:100 },
         reset: true,
     });
   

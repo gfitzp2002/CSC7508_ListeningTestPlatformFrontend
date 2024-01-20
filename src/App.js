@@ -5,24 +5,19 @@ import Welcome from './components/Welcome';
 import { Container, Image, Row, Col } from 'react-bootstrap';
 import Login from './components/Login';
 import { MessageProvider } from './context/MessageContext';
+import { useAuth } from './context/AuthContext';
 
 function App() {
-  const [isLoggedIn, setLoggedIn] = useState(false);
+  const {isLoggedIn} = useAuth();
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
  
-
-  const handleLoginSuccess = () => {
-    setLoggedIn(true);
-    console.log("User is now logged in!");
-  }
-
   const handleCategorySelect = (categoryId) => {
     setSelectedCategoryId(categoryId);
   };
 
   const renderContent = () => {
     if (!isLoggedIn) {
-      return <Login onLoginSuccess={handleLoginSuccess} />;
+      return <Login  />;
     } else if (selectedCategoryId) {
       return <Quiz categoryId={selectedCategoryId} />;
     } else {
@@ -31,6 +26,7 @@ function App() {
   };
 
   return (
+    
     <MessageProvider>
     <Container className="App" fluid>
       <Row className="text-center">
@@ -52,6 +48,7 @@ function App() {
       </Row> 
     </Container>
     </MessageProvider>
+    
   );
 }
 

@@ -1,31 +1,34 @@
 import React, { useState } from 'react';
 import LoginService from '../service/LoginService';
 import LoginModel from '../models/LoginModel';
+import { useAuth } from '../context/AuthContext';
 import { Button, Container, Form } from 'react-bootstrap';
 
 function Login({onLoginSuccess}) {
-const [loginData, setLoginData] = useState(new LoginModel('', ''));
+  const [loginData, setLoginData] = useState(new LoginModel('', ''));
+  const { login } = useAuth();
 
-const handleUsernameChange = (e) => {
-    setLoginData((prevLoginData) => ({
-    ...prevLoginData,
-    username: e.target.value,
-    }));
-};
+  const handleUsernameChange = (e) => {
+      setLoginData((prevLoginData) => ({
+      ...prevLoginData,
+      username: e.target.value,
+      }));
+  };
 
-const handlePasswordChange = (e) => {
-    setLoginData((prevLoginData) => ({
-    ...prevLoginData,
-    password: e.target.value,
-    }));
-};
+  const handlePasswordChange = (e) => {
+      setLoginData((prevLoginData) => ({
+      ...prevLoginData,
+      password: e.target.value,
+      }));
+  };
 
   const handleLogin = async (e) => {
     e.preventDefault();
 
     try {
-      const token = await LoginService.login(loginData);
-      console.log('Login successful! Token:', token);  
+      const { token, expiry } = await LoginService.login(loginData);
+      console.log('Login successful! Token:', token); 
+      login(token, expiry);
       onLoginSuccess();
     } catch (error) {
       console.error('Login failed:', error);
