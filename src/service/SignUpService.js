@@ -1,6 +1,6 @@
-import axios from 'axios';
+import axios from './AxiosConfig';
 
-const API_URL = 'http://localhost:8080/api/signup';
+const API_URL = '/signup';
 
 const SignUpService = {
   login: async (userData) => {

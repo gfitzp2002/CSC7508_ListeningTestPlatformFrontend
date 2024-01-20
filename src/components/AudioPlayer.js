@@ -10,6 +10,7 @@ function AudioPlayer({ audioFilename, isPlaying, togglePlay }) {
   useEffect(() => {
     const fetchAudio = async () => {
       const url = await getAudio(audioFilename);
+      console.log(url);
       if (url && audioRef.current) {
         audioRef.current.src = url;
       }

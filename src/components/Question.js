@@ -53,7 +53,7 @@ function Question({questionData, onSubmission}) {
     if (!questionData) {
         return <h2>Loading......</h2>
     }
-   // console.log(questionData);
+    console.log(questionData);
      
 
     //concatentate the file name with the file type to create complete file name
@@ -79,7 +79,7 @@ function Question({questionData, onSubmission}) {
                 <Col>
                     <Card className='mb-4'>
                         <Card.Header>
-                            <h4>The following reference audio file is {referenceDescription}</h4>
+                            <h4>This is {referenceDescription}</h4>
                         </Card.Header>
                         <Card.Body >
                             <div id='audio-buttons' className='mt-3'>
@@ -97,7 +97,7 @@ function Question({questionData, onSubmission}) {
                 <Col>
                     <Card className='mb-4'>
                         <Card.Header>
-                            <h4>The following question audio file is {questionDescription}...</h4>
+                            <h4>Here is {questionDescription}...</h4>
                         </Card.Header>
                         <Card.Body >
                             <div id='audio-buttons' className='mt-3'>
