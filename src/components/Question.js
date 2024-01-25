@@ -3,7 +3,7 @@ import { Container, Card, Col, Row, Alert } from 'react-bootstrap';
 import AudioPlayer from '../components/AudioPlayer';
 import { getAudioDescription } from '../service/AudioService';
 import Answer from '../components/Answer';
-import '../styles/Answer.css';
+import '../styles/myStyles.css';
 import { QuizContext } from '../context/QuizContext';
 
 function Question({questionData, onSubmission}) { 

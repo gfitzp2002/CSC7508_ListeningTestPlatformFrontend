@@ -3,7 +3,7 @@ import { QuizContext } from '../context/QuizContext';
 import { MessageContext } from '../context/MessageContext';
 import EarAnimation from './EarAnimation';
 import { Container, Form, Button, Row, Col } from 'react-bootstrap';
-import '../styles/Answer.css';
+import '../styles/myStyles.css';
 
 function Answer({ answers, correctAnswer, onSubmission }) {
   const [selectedAnswer, setSelectedAnswer] = useState('');
@@ -69,7 +69,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         ))}
         </Row>
       </Form>
-      <Button variant='primary' onClick={handleSubmit}>Submit</Button>
+      <Button variant='primary' size="lg" onClick={handleSubmit}>Submit</Button>
       {showAnimation !== null && <EarAnimation isCorrect={showAnimation} />}
     </Container>
   );
