@@ -5,8 +5,12 @@ const CATEGORY_URL = 'quiz/categories';
 
 const getQuiz = async (categoryId) => {
   try {
-    const response = await axios.get(`${QUIZ_URL}/${categoryId}`);
-
+    // Use query parameter to pass categoryId
+    const response = await axios.get(`${QUIZ_URL}`, {
+      params: {
+        categoryId: categoryId
+      }
+    });
     return response.data;
   } catch (error) {
     console.error('Error fetching question:', error.message);

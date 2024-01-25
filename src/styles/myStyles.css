@@ -17,4 +17,13 @@
 .form-check-input {
   margin-right: 0.25rem; /* Adjust as needed */
 }
+
+.earSingingImage {
+  width: 40vw;
+  height: 40vw
+}  
+.accordion-body .text-left {
+  text-align: left;
+}
+
   

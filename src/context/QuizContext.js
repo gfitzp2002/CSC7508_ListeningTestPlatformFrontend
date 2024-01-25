@@ -4,14 +4,21 @@ const QuizContext = createContext();
 
 const QuizProvider = ({ children }) => {
   const [isCorrect, setIsCorrect] = useState(null);
-
+  const [categoryId, setCategoryId] = useState(null);
+  
   const updateIsCorrect = (value) => {
     setIsCorrect(value);
   };
 
+  const updateCategoryId = (id) => {
+    setCategoryId(id);
+  };
+
   const contextValues = {
     isCorrect,
-    updateIsCorrect: setIsCorrect,
+    updateIsCorrect,
+    categoryId,
+    updateCategoryId,
   };
 
   return <QuizContext.Provider value={contextValues}>{children}</QuizContext.Provider>;

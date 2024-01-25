@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { getCategories } from '../service/QuizService';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { QuizContext } from '../context/QuizContext';
 
 function NavBar({ onCategorySelect }) {
   const [categories, setCategories] = useState([]);
-
+  const navigate = useNavigate();
+  const { logout } = useAuth();
+  const { updateCategoryId } = useContext(QuizContext);
+ 
   useEffect(() => {
     const fetchCategories = async () => {
       const fetchedCategories = await getCategories();
@@ -14,6 +20,11 @@ function NavBar({ onCategorySelect }) {
     fetchCategories();
     
   }, []);
+
+  const handleCategorySelect = (categoryId) => {
+    updateCategoryId(categoryId);
+    navigate(`/quiz`);
+  };
 
   return (
     <Navbar  data-bs-theme="light" expand="lg" style={{ backgroundColor: '#65afb4',  borderTop: '2px solid #333', borderBottom: '2px solid #333' }}>
@@ -28,12 +39,13 @@ function NavBar({ onCategorySelect }) {
                {categories.map((category) => (
                   <NavDropdown.Item
                     key={category.categoryId}
-                    onClick={() => onCategorySelect(category.categoryId)}
+                    onClick={() => handleCategorySelect(category.categoryId)}
                   >
                     {category.categoryName}
                   </NavDropdown.Item>
                 ))}
             </NavDropdown>
+            <Nav.Link onClick={() => logout()}>Log Out</Nav.Link>
           </Nav>
         </Navbar.Collapse>
       </Container>

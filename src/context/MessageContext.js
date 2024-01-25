@@ -18,7 +18,7 @@ const MessageProvider = ({ children }) => {
     <MessageContext.Provider value={{ toast, showToast, hideToast }}>
       {children}
       <ToastContainer position='middle-center'>
-        <Toast show={toast.show} onClose={hideToast} bg='success'delay={2000} autohide>
+        <Toast show={toast.show} onClose={hideToast} bg='success'delay={3000} autohide>
           <Toast.Header>
             <strong className='me-auto'>Attention</strong>
           </Toast.Header>
