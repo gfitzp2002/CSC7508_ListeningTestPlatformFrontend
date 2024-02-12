@@ -5,18 +5,13 @@ import { getAudioDescription } from '../service/AudioService';
 import Answer from '../components/Answer';
 import '../styles/myStyles.css';
 import { QuizContext } from '../context/QuizContext';
+import QuestionResponse from '../models/QuestionResponse';
 
-function Question({questionData, onSubmission}) { 
+function Question({questionData}) { 
     const[currentAudio, setCurrentAudio] = useState({ audioFilename: null, audioPlayer: null });
     const [alert, setAlert] = useState({ show: false, message: '', variant: '' });
-    const{ updateIsCorrect} = useContext(QuizContext); 
-
-    useEffect(() => {
-        // Reset isCorrect when the component mounts
-        updateIsCorrect(null); 
-        
-    }, []);
-
+    const{ updateQuizRecord} = useContext(QuizContext); 
+  
     
     useEffect(() => {
         if (alert.show) {
@@ -27,16 +22,20 @@ function Question({questionData, onSubmission}) {
         }
     }, [alert]);
 
-    //inside a useEffect?..
-    const handleSubmission = result => {
-        updateIsCorrect(result);
+  
+    const handleSubmission = (submittedAnswer) => {
+        const questionResponse = new QuestionResponse(
+            questionData.correctAnswer.sourceId,
+            questionData.correctAnswer.answerText, 
+            submittedAnswer
+        )
+        updateQuizRecord(questionResponse);
+        const isCorrect = questionResponse.isCorrect();
         
         // Display alert message for feedback
-        const feedbackMessage = result ? `Correct! Well done!!` : `Oops! Wrong answer. The correct answer was ${questionData.correctAnswer.answerText}`;
-        setAlert({ show: true, message: feedbackMessage, variant: result ? 'success' : 'danger' });
-        if(onSubmission) {
-            onSubmission(result);
-        }
+        const feedbackMessage = isCorrect ? `Correct! Well done!!` : `Oops! Wrong answer. The correct answer was ${questionData.correctAnswer.answerText}`;
+        setAlert({ show: true, message: feedbackMessage, variant: isCorrect ? 'success' : 'danger' });
+
     }
 
     //check if current audioplayer and audiofile are playing and toggle playing state
@@ -51,6 +50,7 @@ function Question({questionData, onSubmission}) {
 
     //ensure the files have loaded before rendering otherwise display...
     if (!questionData) {
+        console.log("Loading statement in Question entered");
         return <h2>Loading......</h2>
     }
     console.log(questionData);

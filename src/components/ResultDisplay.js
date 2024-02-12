@@ -19,8 +19,8 @@ function ResultDisplay({results}){
             <tbody>
               {results.map((result, index) => (
                 <tr key={index}>
-                  <td>{result.questionIndex + 1}</td>
-                  <td>{result.result ? (
+                  <td>{index + 1}</td>
+                  <td>{result ? (
                     <Check className='text-success' />
                   ) :(
                     <X className='text-danger' />

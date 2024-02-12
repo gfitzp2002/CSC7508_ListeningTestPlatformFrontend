@@ -3,7 +3,7 @@ import LoginService from '../service/LoginService';
 import LoginModel from '../models/LoginModel';
 import { useAuth } from '../context/AuthContext';
 import { MessageContext } from '../context/MessageContext';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Button, Container, Form, FloatingLabel } from 'react-bootstrap';
 
 function Login() {
   const [loginData, setLoginData] = useState(new LoginModel('', ''));
@@ -36,9 +36,9 @@ function Login() {
       return;
     }
     try {
-      const { token, expiry } = await LoginService.login(loginData);
+      const { token, expiry, username } = await LoginService.login(loginData);
       console.log('Login successful! Token:', token); 
-      login(token, expiry);
+      login(token, expiry, username);
      
     } catch (error) {
       console.error('Login failed:', error);
@@ -48,28 +48,36 @@ function Login() {
   };
 
   return (
-    <Container className='d-flex flex-column align-items-center' >
-      <h1>Login</h1>
+    <Container className='d-flex flex-column align-items-center mt-2' >
+      <h1 className='mt-2'>Login</h1>
       <Form onSubmit={handleLogin}  className="d-flex flex-column align-items-center">
         <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
+          <FloatingLabel
+              label="Username"
+              className="mt-3 mb-3"
+          >
             <Form.Control
                 type="text"
                 placeholder="Enter username"
                 value={loginData.username}
                 onChange={handleUsernameChange}
             />
-            </Form.Group>
-            <Form.Group controlId="formPassword">
-            <Form.Label>Password:</Form.Label>
+          </FloatingLabel>
+        </Form.Group>
+        <Form.Group controlId="formPassword">
+          <FloatingLabel
+                label="Password"
+                className="mt-3 mb-3"
+            >
             <Form.Control
                 type="password"
                 placeholder="Enter password"
                 value={loginData.password}
                 onChange={handlePasswordChange}
             />
-            </Form.Group>
-        <Button className='mt-4' variant='primary' type="submit">Login</Button>
+          </FloatingLabel>
+        </Form.Group>
+        <Button className='mt-4' variant='primary' size='lg' type="submit">Login</Button>
       </Form>
     </Container>
   );

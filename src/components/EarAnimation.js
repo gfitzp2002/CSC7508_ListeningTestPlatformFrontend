@@ -1,6 +1,6 @@
 import { useSpring, animated } from 'react-spring';
 import correctImage from '../images/earThumbsUp.png';
-import incorrectImage from '../images/earSad.png';
+import incorrectImage from '../images/thinkingEar.png';
 
 
 const EarAnimation = ({ isCorrect }) => {
@@ -15,7 +15,7 @@ const EarAnimation = ({ isCorrect }) => {
 
     return (
         <animated.div style={{ ...animationProps, position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', zIndex: 1000 }}>
-            <img src={imageSrc} alt={isCorrect ? 'Correct!' : 'Wrong Answer!'} style={{ width: '10vw', height: '10vw' }} />
+            <img src={imageSrc} alt={isCorrect ? 'Correct!' : 'Wrong Answer!'} style={{ width: '30vw', height: '30vw' }} />
         </animated.div>
     );          
      
