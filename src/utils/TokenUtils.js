@@ -29,7 +29,7 @@ export const tokenExpiryCheck = () => {
     const now = new Date();
 
     // Set the time threshold - 5 minute
-    const threshold = 3 * 60 * 1000; // 5 minutes in milliseconds
+    const threshold = 5 * 60 * 1000; // 5 minutes in milliseconds
     const result = now.getTime() + threshold >= expiry.getTime();
     // Check if the current time is within the threshold of the expiry time
     console.log("token expiry check result: " + result);
@@ -40,7 +40,7 @@ export const tokenExpiryCheck = () => {
 export const startTokenRefreshTimer = (onFail) => {
     console.log("Token refresh timer started");
     // Call refresh at regular intervals
-    const refreshInterval = 0.5 * 60 * 1000; // 1 minute in milliseconds
+    const refreshInterval = 5 * 60 * 1000; // 1 minute in milliseconds
   
     const intervalId = setInterval(async () => {
 

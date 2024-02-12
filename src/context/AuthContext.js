@@ -7,13 +7,15 @@ export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState({
       token: localStorage.getItem('userToken'),
       expiry: localStorage.getItem('tokenExpiry') ? new Date(parseInt(localStorage.getItem('tokenExpiry'), 10)) : null,
+      username: localStorage.getItem('username'),
       isLoggedIn: false,
       intervalId: null
     });
-  
+      
     useEffect(() => {
       const token = localStorage.getItem('userToken');
       const expiryString = localStorage.getItem('tokenExpiry');
+      const username = localStorage.getItem('username');
       
       // Convert expiryString to a Date object
       const expiry = expiryString ? new Date(parseInt(expiryString, 10)) : null;
@@ -27,21 +29,20 @@ export const AuthProvider = ({ children }) => {
               ...prevState,
               token,
               expiry,
+              username,
               isLoggedIn: true,
               intervalId: startTokenRefreshTimer(logout)
           }));
       } else {
         logout();
       }
-      // Cleanup function
-      return () => {
-        logout();
-      };
+
     }, []);
   
-    const login = (token, expiry) => {
+    const login = (token, expiry, username) => {
       localStorage.setItem('userToken', token);
       localStorage.setItem('tokenExpiry', expiry);
+      localStorage.setItem('username', username);
       const intervalId = startTokenRefreshTimer(logout);
       setAuthState({ token, expiry, isLoggedIn: true, intervalId });
     };
@@ -49,10 +50,13 @@ export const AuthProvider = ({ children }) => {
     const logout = () => {
       localStorage.removeItem('userToken');
       localStorage.removeItem('tokenExpiry');
+      localStorage.removeItem('username');
       if (authState.intervalId) {
         stopTokenRefreshTimer(authState.intervalId);
+        console.log("Logout called");
       }
-      setAuthState({ token: null, expiry: null, isLoggedIn: false, intervalId: null });
+      setAuthState({ token: null, expiry: null, username:null, isLoggedIn: false, intervalId: null });
+      
     };
 
   return (

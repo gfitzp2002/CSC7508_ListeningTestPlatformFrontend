@@ -2,14 +2,14 @@ import React, { useState, useContext } from 'react';
 import { QuizContext } from '../context/QuizContext';
 import { MessageContext } from '../context/MessageContext';
 import EarAnimation from './EarAnimation';
-import { Container, Form, Button, Row, Col } from 'react-bootstrap';
+import { Card, Form, Button, Row, Col } from 'react-bootstrap';
 import '../styles/myStyles.css';
 
 function Answer({ answers, correctAnswer, onSubmission }) {
   const [selectedAnswer, setSelectedAnswer] = useState('');
   const [showAnimation, setShowAnimation] = useState(null);
-  const{ updateIsCorrect } = useContext(QuizContext);
-  const { showToast } = useContext(MessageContext); 
+  const{ updateQuizRecord } = useContext(QuizContext);
+ 
   
   function handleAnimation(isCorrect) {
     // Show the correct animation depending on isCorrect value
@@ -28,7 +28,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
     // Check if the selected answer is not empty
     if (!selectedAnswer) {
       // Display a message to tell user they must choose an answer 
-      showToast('Please select an answer');
+      alert('Please select an answer');
       return;
     }
     
@@ -36,18 +36,19 @@ function Answer({ answers, correctAnswer, onSubmission }) {
     const isCorrectAnswer = selectedAnswer === correctAnswer.answerText;
     //show animation
     handleAnimation(isCorrectAnswer);
-    //update context value and pass onSubmission prop to Question 
-    updateIsCorrect(isCorrectAnswer);
-    onSubmission(isCorrectAnswer);
+
+    onSubmission(selectedAnswer);
     //reset selectedAnswer value
     setSelectedAnswer('');
   };
 
   return (
     
-    <Container>
-      
-      <h3>Possible Answers:</h3>
+    <Card className='mb-4'>
+      <Card.Header>      
+        <h4>Possible Answers:</h4>
+      </Card.Header>
+      <Card.Body>
       <Form>
         <Row>
         {answers.map((answer) => (
@@ -56,7 +57,8 @@ function Answer({ answers, correctAnswer, onSubmission }) {
             className='radio-highlight'
             onClick={() => handleChange(answer.answerText)}
             >
-            <Form.Check              
+            <Form.Check
+              className='form-check-input '              
               type='radio'
               id={answer.answerId}
               label={answer.answerText}
@@ -69,9 +71,12 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         ))}
         </Row>
       </Form>
+      </Card.Body>
+      <Card.Footer>
       <Button variant='primary' size="lg" onClick={handleSubmit}>Submit</Button>
       {showAnimation !== null && <EarAnimation isCorrect={showAnimation} />}
-    </Container>
+      </Card.Footer>
+    </Card>
   );
 }
 

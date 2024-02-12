@@ -11,6 +11,7 @@ const getQuiz = async (categoryId) => {
         categoryId: categoryId
       }
     });
+    //console.log("getQuiz called: " + JSON.stringify(response.data));
     return response.data;
   } catch (error) {
     console.error('Error fetching question:', error.message);

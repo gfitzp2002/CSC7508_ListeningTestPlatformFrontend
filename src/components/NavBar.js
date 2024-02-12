@@ -1,15 +1,15 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { getCategories } from '../service/QuizService';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { QuizContext } from '../context/QuizContext';
 
-function NavBar({ onCategorySelect }) {
+function NavBar() {
   const [categories, setCategories] = useState([]);
+  const {setCategoryId, quizData }= useContext(QuizContext);
   const navigate = useNavigate();
   const { logout } = useAuth();
-  const { updateCategoryId } = useContext(QuizContext);
  
   useEffect(() => {
     const fetchCategories = async () => {
@@ -22,8 +22,10 @@ function NavBar({ onCategorySelect }) {
   }, []);
 
   const handleCategorySelect = (categoryId) => {
-    updateCategoryId(categoryId);
-    navigate(`/quiz`);
+    setCategoryId(categoryId);
+    if(quizData){
+      navigate(`/quiz/${categoryId}`);
+    }    
   };
 
   return (
@@ -35,8 +37,9 @@ function NavBar({ onCategorySelect }) {
           <Nav className="mr-auto">
             <Nav.Link href="#home">Account</Nav.Link>
             <Nav.Link href="#link">History</Nav.Link>
+            <Nav.Link as={Link} to="/login-history">Login History</Nav.Link>
             <NavDropdown title="Select A Quiz" id="basic-nav-dropdown">
-               {categories.map((category) => (
+               {categories && categories.map((category) => (
                   <NavDropdown.Item
                     key={category.categoryId}
                     onClick={() => handleCategorySelect(category.categoryId)}

@@ -1,6 +1,5 @@
-import React, { useState, useEffect, useContext } from 'react';
-import { Container, Button, Row, Col, Accordion, Card } from 'react-bootstrap';
-import { getQuiz } from '../service/QuizService';
+import React, { useEffect, useContext, useState } from 'react';
+import { Container, Button, Row, Col } from 'react-bootstrap';
 import { QuizContext } from '../context/QuizContext';
 import Question from '../components/Question';
 import Scoreboard from '../components/Scoreboard';
@@ -8,69 +7,31 @@ import ResultDisplay from '../components/ResultDisplay';
 import QuizInfoModal from './QuizInfoModel';
 
 function Quiz() {
-    const [quizData, setQuizData] = useState(null);
-    const [questionIndex, setQuestionIndex] = useState(0);
-    const [results, setResults] = useState([]);
-    const [isComplete, setIsComplete] =useState(false);
-    const [score, setScore] = useState(0);
-    const { categoryId } = useContext(QuizContext);
+    const { categoryId, quizData, quizRecord, questionIndex, startQuiz, updateQuizRecord, isComplete } = useContext(QuizContext);
     const [showModal, setShowModal] = useState(false);
     
-    useEffect(() => {
-        getQuizData();
-    }, [categoryId]);
-
-    useEffect(() => {
-        console.log('Results: ' + JSON.stringify(results));
-        if (quizData && questionIndex >= quizData.questionSet.length){
-            setIsComplete(true);
-        }
-        setScore(calculateScore());
-    }, [questionIndex,results, quizData]);
-
-    const getQuizData = async () => {
-        const data = await getQuiz(categoryId);
-        if (data) {
-            setQuizData(data);
-            setResults([]);
-            setQuestionIndex(0);
-            setIsComplete(false);
-        }
-    };
+    //console.log("Quiz component, quiz data: " + JSON.stringify(quizData));
+    //console.log("Quiz component, quiz [0]: " + JSON.stringify(quizData.questionSet[0]));
+    //console.log("Quiz component, question index: " + questionIndex);
+    console.log("Quiz component, quiz record " + JSON.stringify(quizRecord));
     
-    const calculateScore = () => {
-        return results.reduce((acc, result) => (result.result ? acc + 1 : acc), 0);
-      };
-    
-    
-    //record results in results array - to improve: map to questionId? Will need questionResponse object modified potentially
-    const handleSubmission = (result) => {
-        setResults((prev) => [...prev, {questionIndex, result}]);
-        setQuestionIndex((prev) => prev + 1);
-        
-    };
-
-    // Function to toggle the modal
     const toggleModal = () => setShowModal(!showModal);
 
-    //loading screen if now data
-    if(!quizData) {
-        return <h1>Loading.....</h1>;
+    if (!categoryId || !quizData) {
+        return <h1>Loading.....</h1>;       
     }
-    
-    //If no questions left - display the final result
-    if(isComplete) {
+        
+    if (isComplete) {
         return (
-          <main className='container text-center'>
-            <Container><h1>You Scored: {score}!</h1></Container>
-            <ResultDisplay results={results} />
-            <Button variant='primary' onClick={getQuizData}>Play Again?</Button>
-          </main>
+            <main className='container text-center'>
+                <Container><h1>You Scored: {quizRecord.calculateScore()}!</h1></Container>
+                <ResultDisplay results={quizRecord.calculateResults()} />               
+                <Button variant='primary' onClick={startQuiz}>Play Again?</Button>
+            </main>
         );
-      }
+    }
 
     return (
-        
         <Container className='text-center'> 
             <Container style={{ backgroundColor: '#FFE1A8' }}>   
                 <Row>
@@ -86,14 +47,14 @@ function Quiz() {
                 </Row>
                 <Row>
                     <Col>                                            
-                        <Scoreboard score={score} />                    
+                        <Scoreboard score={quizRecord.calculateScore()} />                    
                     </Col>
                 </Row>
                 <Row>
                     <Col>
                         <Question
-                            questionData={quizData.questionSet[questionIndex]}
-                            onSubmission={handleSubmission}
+                            questionData={quizData.questionSet[questionIndex]}                           
+                            
                         />
                     </Col>
                 </Row>
@@ -104,9 +65,7 @@ function Quiz() {
                 description={quizData ? quizData.description : ''} 
             /> 
         </Container>
-        
     );
-
 }
 
 export default Quiz;

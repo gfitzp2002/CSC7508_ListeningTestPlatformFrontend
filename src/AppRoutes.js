@@ -4,13 +4,11 @@ import Welcome from './components/Welcome';
 import Login from './components/Login';
 import SignUpForm from './components/SignUpForm';
 import LandingPage from './components/LandingPage';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
+import LoginHistory from './components/LoginHistory';
 
 const AppRoutes = () => {
-    const location = useLocation();
-    const queryParams = new URLSearchParams(location.search);
-    const categoryId = queryParams.get('categoryId');
 
     return (
         <Routes>
@@ -40,14 +38,22 @@ const AppRoutes = () => {
             } 
           />
           <Route 
-            path="/quiz" 
+            path="/quiz/:categoryId" 
             element={
               <ProtectedRoute redirectTo="/login">
-                <Quiz categoryId={categoryId} />
+                <Quiz />
               </ProtectedRoute>
             } 
           />
-          {/* Add more routes as needed - add a 404 not found component */}
+          <Route 
+            path="/login-history" 
+            element={
+              <ProtectedRoute redirectTo="/login">
+                <LoginHistory />
+              </ProtectedRoute>
+            } 
+          />
+          {/* add a 404 not found component */}
         </Routes>
       );
     };
