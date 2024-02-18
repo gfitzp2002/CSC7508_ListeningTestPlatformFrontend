@@ -3,6 +3,7 @@ class QuizRecord {
     constructor(username, categoryId) {
       this.username = username;
       this.categoryId = categoryId;
+      this.score = 0;
       this.questions = [];
     }
   

@@ -12,18 +12,9 @@
   background-color: #dbd5d5; /* Light grey background on hover */
   cursor: pointer;
   border: none;
+  
 }
 
-/* Adjust space between radio button and label */
-.form-check-input {
-  margin-right: 2rem; 
-}
-
-.form-check-input label {
-  white-space: nowrap;
-  font-weight: bold;
-  border: none;
-}
 
 .earSingingImage {
   width: 40vw;

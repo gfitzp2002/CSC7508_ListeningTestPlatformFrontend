@@ -16,7 +16,7 @@ function Answer({ answers, correctAnswer, onSubmission }) {
     setShowAnimation(isCorrect);
   
     // Hide the animation after a specified time period
-    setTimeout(() => setShowAnimation(null), 2000);
+    setTimeout(() => setShowAnimation(null), 1000);
   }
   
   const handleChange = (input) => {
@@ -49,28 +49,35 @@ function Answer({ answers, correctAnswer, onSubmission }) {
         <h4>Possible Answers:</h4>
       </Card.Header>
       <Card.Body>
-      <Form>
         <Row>
-        {answers.map((answer) => (
-          <Col key={answer.answerId} md={6}>
-            <div 
-            className='radio-highlight'
-            onClick={() => handleChange(answer.answerText)}
-            >
-            <Form.Check
-              className='form-check-input '              
-              type='radio'
-              id={answer.answerId}
-              label={answer.answerText}
-              value={answer.answerText}
-              checked={selectedAnswer === answer.answerText}
-              onChange={handleChange}
-            />
-            </div>
+          <Col md={2}>
           </Col>
-        ))}
+          <Col md={8}>
+            <Form>
+              <Row>
+              {answers.map((answer) => (
+                <Col key={answer.answerId} md={6}>
+                  <div 
+                  className='radio-highlight'
+                  onClick={() => handleChange(answer.answerText)}
+                  >
+                  <Form.Check
+                    type='radio'
+                    id={answer.answerId}
+                    label={<span style={{ fontWeight: 'bold' }}>{answer.answerText}</span>}
+                    value={answer.answerText}
+                    checked={selectedAnswer === answer.answerText}
+                    onChange={handleChange}
+                  />
+                  </div>
+                </Col>
+              ))}
+              </Row>
+            </Form>
+          </Col>
+          <Col md={2}>      
+          </Col>
         </Row>
-      </Form>
       </Card.Body>
       <Card.Footer>
       <Button variant='primary' size="lg" onClick={handleSubmit}>Submit</Button>

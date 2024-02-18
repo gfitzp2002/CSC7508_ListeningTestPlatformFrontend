@@ -7,7 +7,7 @@ import ResultDisplay from '../components/ResultDisplay';
 import QuizInfoModal from './QuizInfoModel';
 
 function Quiz() {
-    const { categoryId, quizData, quizRecord, questionIndex, startQuiz, updateQuizRecord, isComplete } = useContext(QuizContext);
+    const { categoryId, quizData, quizRecord, questionIndex, startQuiz, isComplete } = useContext(QuizContext);
     const [showModal, setShowModal] = useState(false);
     
     //console.log("Quiz component, quiz data: " + JSON.stringify(quizData));
@@ -16,6 +16,7 @@ function Quiz() {
     console.log("Quiz component, quiz record " + JSON.stringify(quizRecord));
     
     const toggleModal = () => setShowModal(!showModal);
+
 
     if (!categoryId || !quizData) {
         return <h1>Loading.....</h1>;       
