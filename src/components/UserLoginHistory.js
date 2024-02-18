@@ -3,7 +3,7 @@ import { getLoginHistory } from '../service/AdminService';
 import { MessageContext } from '../context/MessageContext';
 import { Button, Table, Form, Container, Col, Row, Badge} from 'react-bootstrap';
 
-const LoginHistory = () => {
+const UserLoginHistory = () => {
     const [username, setUsername] = useState('');
     const [loginHistory, setLoginHistory] = useState([]);
     const [displayResults, setDisplayResults] = useState(false);
@@ -48,7 +48,8 @@ const LoginHistory = () => {
   return (
     <Container className='text-center mt-4'>
         {!displayResults && (
-        <Row>    
+        <Row>
+            <Container className='mb-4'><h3>Search for a user to view their log in history..</h3></Container>    
             <Col md={6}>
                 <Form>                
                     <Form.Group controlId="formUsername">                    
@@ -106,4 +107,4 @@ const LoginHistory = () => {
   );
 };
 
-export default LoginHistory;
+export default UserLoginHistory;

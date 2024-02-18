@@ -2,8 +2,10 @@ import axios from './AxiosConfig';
 
 const QUIZ_URL = '/quiz';
 const CATEGORY_URL = 'quiz/categories';
+const QUIZ_RECORD_URL = 'quiz/record';
 
 const getQuiz = async (categoryId) => {
+  console.log('getQuiz() called....');
   try {
     // Use query parameter to pass categoryId
     const response = await axios.get(`${QUIZ_URL}`, {
@@ -30,4 +32,15 @@ const getCategories = async () => {
   }
 };
 
-export { getQuiz, getCategories };
+  // Function to store QuizRecord on the server
+const  storeQuizRecord = async (quizRecord) => {
+    try {
+      const response = await axios.post(`${QUIZ_RECORD_URL}`, quizRecord);
+      return response.data;
+    } catch (error) {
+      console.error('Error storing QuizRecord:', error);
+      throw error; // Re-throw the error to handle it in the caller
+    }
+  };
+
+export { getQuiz, getCategories, storeQuizRecord };

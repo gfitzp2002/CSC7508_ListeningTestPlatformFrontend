@@ -2,11 +2,15 @@ import React from 'react';
 import Quiz from './components/Quiz';
 import Welcome from './components/Welcome';
 import Login from './components/Login';
+import QuizMenu from './components/QuizMenu';
 import SignUpForm from './components/SignUpForm';
 import LandingPage from './components/LandingPage';
 import { Routes, Route } from 'react-router-dom';
 import ProtectedRoute from './utils/ProtectedRoute';
-import LoginHistory from './components/LoginHistory';
+import UserLoginHistory from './components/UserLoginHistory';
+import AdminPanel from './components/AdminPanel';
+import LoginStatsByMonth from './components/LoginStatsByMonth';
+import Leaderboard from './components/LeaderBoard';
 
 const AppRoutes = () => {
 
@@ -46,10 +50,42 @@ const AppRoutes = () => {
             } 
           />
           <Route 
-            path="/login-history" 
+            path="/quiz-menu" 
             element={
               <ProtectedRoute redirectTo="/login">
-                <LoginHistory />
+                <QuizMenu />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/user-login-history" 
+            element={
+              <ProtectedRoute redirectTo="/login">
+                <UserLoginHistory />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/login-stats" 
+            element={
+              <ProtectedRoute redirectTo="/login">
+                <LoginStatsByMonth />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/admin-panel" 
+            element={
+              <ProtectedRoute redirectTo="/login">
+                <AdminPanel />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/top-scores" 
+            element={
+              <ProtectedRoute redirectTo="/login">
+                <Leaderboard />
               </ProtectedRoute>
             } 
           />

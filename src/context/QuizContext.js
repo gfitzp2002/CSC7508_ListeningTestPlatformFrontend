@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from 'react';
 import QuizRecord from '../models/QuizRecord';
-import QuestionResponse from '../models/QuestionResponse';
-import { getQuiz } from '../service/QuizService';
+import { getQuiz, storeQuizRecord } from '../service/QuizService';
 
 const QuizContext = createContext();
 
@@ -13,12 +12,17 @@ const QuizProvider = ({ children }) => {
   const [isComplete, setIsComplete] = useState(false);
 
   useEffect(() => {
-    startQuiz();
+    if(categoryId !== null) {
+      startQuiz();
+    }    
   }, [categoryId]);
 
   useEffect(() => {
     if (quizData && questionIndex >= quizData.questionSet.length){
         setIsComplete(true);
+        quizRecord.score = quizRecord.calculateScore();
+        console.log("Quiz Record: " + JSON.stringify(quizRecord));
+        storeQuizRecord(quizRecord);
     }
    
 }, [questionIndex, quizData]);
@@ -32,19 +36,20 @@ const QuizProvider = ({ children }) => {
 
   
   const startQuiz = async () => {
-    const username = localStorage.getItem('username');
-    const newQuizRecord = new QuizRecord(username, categoryId);
-    //Instantiate new QuizRecord object
-    setQuizRecord(newQuizRecord);
-    setQuestionIndex(0);
-    setIsComplete(false);
-    console.log("Quiz Context startQuiz called!");
-    console.log("Quiz Context Quiz Record - " + JSON.stringify(newQuizRecord));
     //fetch Quiz data
     const data = await getQuiz(categoryId);
     if(data) {
       setQuizData(data);
-    }  
+      //create new quiz record
+      const username = localStorage.getItem('username');
+      const newQuizRecord = new QuizRecord(username, categoryId);
+      //initialize context values
+      setQuizRecord(newQuizRecord);
+      setQuestionIndex(0);
+      setIsComplete(false);
+      console.log("Quiz Context startQuiz called!");
+      console.log("Quiz Context Quiz Record - " + JSON.stringify(newQuizRecord));
+    }    
     //console.log("Quiz Context, questionData: " + JSON.stringify(quizData));
   };
 
