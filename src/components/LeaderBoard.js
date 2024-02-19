@@ -62,8 +62,12 @@ const Leaderboard = () => {
                 <Col md={8}>
                 {!selectedCategory && <h1 className="mt-4">View the top scores in each quiz category!</h1>}
                 {selectedCategory && (
-                <>              
-                    <h2 className='mb-4 mt-4 text-center'>{selectedCategory}</h2>
+                <>  
+                    <Row>
+                        <Container><h2 className='mb-4 mt-4 text-center'>{selectedCategory}</h2></Container>
+                    
+                    </Row>            
+                    
                     <Table striped bordered hover className='mb-4'>
                         <thead>
                             <tr>

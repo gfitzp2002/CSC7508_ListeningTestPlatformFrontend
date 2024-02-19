@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { getLoginHistory } from '../service/AdminService';
+import { getLoginHistory, calculateDaysSinceLastLogin } from '../service/AdminService';
 import { MessageContext } from '../context/MessageContext';
 import { Button, Table, Form, Container, Col, Row, Badge} from 'react-bootstrap';
 
@@ -10,21 +10,19 @@ const UserLoginHistory = () => {
     const [daysSinceLogin, setDaysSinceLogin] = useState(null);
     const { showToast } = useContext(MessageContext); 
 
-  useEffect(() => {
-    if (loginHistory.length > 0) {
-      const latestLoginTimestamp = loginHistory[loginHistory.length - 1].loginTimestamp;
-      const millisecondsSinceLastLogin = Date.now() - latestLoginTimestamp;
-      const days = Math.floor(millisecondsSinceLastLogin / (1000 * 60 * 60 * 24));
-      setDaysSinceLogin(days);
-    }
-    
-  }, [loginHistory])
+    useEffect(() => {
+        if (loginHistory.length > 0) {
+            const days = calculateDaysSinceLastLogin(loginHistory);
+            setDaysSinceLogin(days);
+        }
+        
+    }, [loginHistory])
 
-  const handleUsernameChange = (event) => {
-    setUsername(event.target.value);
-  };
+    const handleUsernameChange = (event) => {
+        setUsername(event.target.value);
+    };
 
-  const handleSubmit = async () => {
+    const handleSubmit = async () => {
     try {
         const history = await getLoginHistory(username);
         setLoginHistory(history);
