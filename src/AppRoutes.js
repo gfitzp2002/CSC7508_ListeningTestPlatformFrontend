@@ -11,6 +11,7 @@ import UserLoginHistory from './components/UserLoginHistory';
 import AdminPanel from './components/AdminPanel';
 import LoginStatsByMonth from './components/LoginStatsByMonth';
 import Leaderboard from './components/LeaderBoard';
+import InactiveUsers from './components/InactiveUsers';
 
 const AppRoutes = () => {
 
@@ -28,7 +29,7 @@ const AppRoutes = () => {
           <Route 
             path="/signup" 
             element={
-              <ProtectedRoute redirectTo="/" inverse={true}>
+              <ProtectedRoute redirectTo="/home" inverse={true}>
                 <SignUpForm />
               </ProtectedRoute>
             } 
@@ -36,7 +37,7 @@ const AppRoutes = () => {
           <Route 
             path="/home" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <Welcome />
               </ProtectedRoute>
             } 
@@ -44,7 +45,7 @@ const AppRoutes = () => {
           <Route 
             path="/quiz/:categoryId" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <Quiz />
               </ProtectedRoute>
             } 
@@ -52,7 +53,7 @@ const AppRoutes = () => {
           <Route 
             path="/quiz-menu" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <QuizMenu />
               </ProtectedRoute>
             } 
@@ -60,7 +61,7 @@ const AppRoutes = () => {
           <Route 
             path="/user-login-history" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <UserLoginHistory />
               </ProtectedRoute>
             } 
@@ -68,15 +69,23 @@ const AppRoutes = () => {
           <Route 
             path="/login-stats" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <LoginStatsByMonth />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/inactive-users" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <InactiveUsers />
               </ProtectedRoute>
             } 
           />
           <Route 
             path="/admin-panel" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <AdminPanel />
               </ProtectedRoute>
             } 
@@ -84,7 +93,7 @@ const AppRoutes = () => {
           <Route 
             path="/top-scores" 
             element={
-              <ProtectedRoute redirectTo="/login">
+              <ProtectedRoute redirectTo="/">
                 <Leaderboard />
               </ProtectedRoute>
             } 

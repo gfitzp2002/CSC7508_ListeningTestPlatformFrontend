@@ -16,7 +16,7 @@ function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Account</Nav.Link>
+            <Nav.Link href="#home">Profile</Nav.Link>
             <Nav.Link href="#link">History</Nav.Link>
             <Nav.Link as={Link} to="/admin-panel">Admin</Nav.Link>
             <Nav.Link as={Link} to="/quiz-menu">Lets Play!!</Nav.Link>
