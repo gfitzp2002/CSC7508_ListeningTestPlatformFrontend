@@ -1,9 +1,11 @@
 import React, { useContext, useState } from 'react';
-import { Button, Container, Form } from 'react-bootstrap';
+import { Button, Container, Form, Row, Image, FloatingLabel, Col } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 import UserModel from '../models/UserModel';
 import SignUpService from '../service/SignUpService';
 import { useNavigate } from 'react-router-dom';
 import { MessageContext } from '../context/MessageContext';
+import logoImage from '../images/auralatlasLogo2small.png'
 
 function SignUpForm() {
   const [userData, setUserData] = useState(new UserModel('', '', '', '', ''));
@@ -97,65 +99,89 @@ function SignUpForm() {
 
   return (
     <Container  className="d-flex flex-column align-items-center">
-      <h1>Create Account</h1>
-      <Form onSubmit={handleSubmit} className='d-flex flex-column align-items-center'>
+      <Row>
+        <Link to="/">
+          <Image src={logoImage} alt="Aural Atlas logo image" roundedCircle className='mb-5'/>
+        </Link>
+      </Row>
+      <Row>
+      <Form onSubmit={handleSubmit} className='d-flex flex-column' style={{ borderRadius: '10px',border: '1px solid white', padding: '20px' }}>
         <Form.Group controlId="formUsername">
-            <Form.Label>Username:</Form.Label>
+            <FloatingLabel label="Username" className="mt-3 mb-3">
+              <Form.Control
+                  type="text"
+                  placeholder="Enter username"
+                  value={userData.username}
+                  onChange={handleUsernameChange}
+              />
+            </FloatingLabel>
+        </Form.Group>
+
+        <Row>
+          <Col>
+        <Form.Group controlId="formUserForename">
+          <FloatingLabel label="Forename" className="mt-3 mb-3">
             <Form.Control
                 type="text"
-                placeholder="Enter username"
-                value={userData.username}
-                onChange={handleUsernameChange}
+                placeholder="Enter forename"
+                value={userData.userForename}
+                onChange={handleUserForenameChange}
             />
+          </FloatingLabel>
         </Form.Group>
-        <Form.Group controlId="formUserForename">
-          <Form.Label>Forename:</Form.Label>
-          <Form.Control
-              type="text"
-              placeholder="Enter forename"
-              value={userData.userForename}
-              onChange={handleUserForenameChange}
-          />
-
-        </Form.Group>
+        </Col>
+        <Col>
         <Form.Group controlId="formUserSurname">
-            <Form.Label>Surname:</Form.Label>
+          <FloatingLabel label="Surname" className="mt-3 mb-3">
             <Form.Control
                 type="text"
                 placeholder="Enter surname"
                 value={userData.userSurname}
                 onChange={handleUserSurnameChange}
             />
+          </FloatingLabel>
         </Form.Group>
+        </Col>
+        </Row>
         <Form.Group controlId="formUserEmail">
-            <Form.Label>Email:</Form.Label>
+          <FloatingLabel label="Email" className="mt-3 mb-3">
             <Form.Control
                 type="email"
                 placeholder="Enter email"
                 value={userData.userEmail}
                 onChange={handleUserEmailChange}
             />
+          </FloatingLabel>
         </Form.Group>
+        <Row>
+          <Col>
         <Form.Group controlId="formPassword">
-          <Form.Label>Password:</Form.Label>
-          <Form.Control
-              type="password"
-              placeholder="Enter password"
-              value={userData.password}
-              onChange={handlePasswordChange}
-          />
+          <FloatingLabel label="Password" className="mt-3 mb-3">
+            <Form.Control
+                type="password"
+                placeholder="Enter password"
+                value={userData.password}
+                onChange={handlePasswordChange}
+            />
+          </FloatingLabel>
         </Form.Group>
+        </Col>
+        <Col>
         <Form.Group controlId="formConfirmPassword">
-          <Form.Label>Confirm Password:</Form.Label>
-          <Form.Control
-              type="password"
-              placeholder="Confirm password"
-              value={confirmPassword}
-              onChange={handleConfirmPasswordChange}
-          />
+          <FloatingLabel label="Confirm Password" className="mt-3 mb-3">
+            <Form.Control
+                type="password"
+                placeholder="Confirm password"
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+            />
+          </FloatingLabel>
         </Form.Group>
-        <Button className='mt-4' variant='primary' type="submit">Sign Up</Button>
+        </Col>
+        </Row>
+        <Button className='mt-4' variant='secondary' type="submit">Sign Up</Button>
       </Form>
+      </Row>
     </Container>
   );
 };

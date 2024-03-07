@@ -28,10 +28,11 @@ const InactiveUsers = () => {
 
     return (
         <Container className="text-center mt-4">
-            <Row>
-                <Container className='mb-4'>
+            <Row class="mb-4">
+                
                     <h1>Inactive Users List</h1>
-                </Container>
+                    <p>Please see a list of users who have not logged in within the past 7 days or more</p>
+                
             </Row>
 
         {isLoading ? ( // Render loading indicator while data is being fetched

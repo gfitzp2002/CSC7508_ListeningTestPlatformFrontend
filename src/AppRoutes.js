@@ -12,12 +12,20 @@ import AdminPanel from './components/AdminPanel';
 import LoginStatsByMonth from './components/LoginStatsByMonth';
 import Leaderboard from './components/LeaderBoard';
 import InactiveUsers from './components/InactiveUsers';
+import ProfilePage from './components/ProfilePage';
 
 const AppRoutes = () => {
 
     return (
         <Routes>
-          <Route path="/" element={<LandingPage />} />        
+          <Route 
+            path="/" 
+            element={
+            <ProtectedRoute redirectTo="/home" inverse={true}>
+                <LandingPage />
+            </ProtectedRoute>
+            } 
+          />          
           <Route 
             path="/login" 
             element={
@@ -42,6 +50,14 @@ const AppRoutes = () => {
               </ProtectedRoute>
             } 
           />
+          <Route 
+            path="/profile-page" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                 <ProfilePage />
+              </ProtectedRoute>
+            } 
+          /> 
           <Route 
             path="/quiz/:categoryId" 
             element={

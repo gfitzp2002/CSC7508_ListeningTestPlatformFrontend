@@ -11,7 +11,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <AuthProvider>
-      <Container style={{ minHeight: '100vh', backgroundColor: '#65afb4'  }} fluid>
+      <Container  fluid>
         <App />
       </Container>
     </AuthProvider>

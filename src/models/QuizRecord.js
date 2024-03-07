@@ -24,9 +24,12 @@ class QuizRecord {
 
     calculateResults() {
       // Calculate the results based on the responses    
-      return this.questions.map(question => question.isCorrect());
-    }
-  
+      return this.questions.map(question => ({
+        correctAnswer: question.correctAnswer,
+        submittedAnswer: question.submittedAnswer,
+        isCorrect: question.isCorrect()
+    }));
+  }
     
   }
   
