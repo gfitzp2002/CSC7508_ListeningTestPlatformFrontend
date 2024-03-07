@@ -17,10 +17,10 @@ function App() {
     <BrowserRouter>
       <MessageProvider>
         <QuizProvider>
-          <Container className="App"  fluid>
+          <Container className="App" >
             <Row className="text-center">
                 <header>
-                  <Image src={process.env.PUBLIC_URL + '/logo.png'} alt="Auditory Atlas Logo" />
+                 
                   {isLoggedIn && <NavBar />}
                 </header>
             </Row>

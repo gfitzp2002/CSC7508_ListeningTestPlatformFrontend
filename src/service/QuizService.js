@@ -2,7 +2,7 @@ import axios from './AxiosConfig';
 
 const QUIZ_URL = '/quiz';
 const CATEGORY_URL = 'quiz/categories';
-const QUIZ_RECORD_URL = 'quiz/record';
+const QUIZ_RECORD_URL = 'quiz/store';
 
 const getQuiz = async (categoryId) => {
   console.log('getQuiz() called....');

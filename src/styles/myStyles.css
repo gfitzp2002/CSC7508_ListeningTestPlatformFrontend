@@ -1,5 +1,7 @@
 #answers {
   list-style: none;
+  -webkit-columns: 2; /* For Safari and Chrome */
+  -moz-columns: 2; /* For Firefox */
   columns: 2;
   }
   
@@ -16,9 +18,9 @@
 }
 
 
-.earSingingImage {
-  width: 40vw;
-  height: 40vw
+.atlasMainLogo {
+  width: 30vw;
+  height: 30vw
 }  
 
   

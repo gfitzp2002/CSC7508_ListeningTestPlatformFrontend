@@ -3,7 +3,8 @@ import LoginService from '../service/LoginService';
 import LoginModel from '../models/LoginModel';
 import { useAuth } from '../context/AuthContext';
 import { MessageContext } from '../context/MessageContext';
-import { Button, Container, Form, FloatingLabel } from 'react-bootstrap';
+import { Button, Container, Form, FloatingLabel, Image } from 'react-bootstrap';
+import logoImage from '../images/auralatlasLogo2small.png'
 
 function Login() {
   const [loginData, setLoginData] = useState(new LoginModel('', ''));
@@ -48,9 +49,10 @@ function Login() {
   };
 
   return (
-    <Container className='d-flex flex-column align-items-center mt-2' >
-      <h1 className='mt-2'>Login</h1>
-      <Form onSubmit={handleLogin}  className="d-flex flex-column align-items-center">
+    <Container className='d-flex flex-column align-items-center mt-2'>
+      <Image src={logoImage} alt="Aural Atlas logo image" roundedCircle className='mb-5'/>
+      
+      <Form onSubmit={handleLogin}  className="d-flex flex-column align-items-center" style={{ borderRadius: '10px',border: '1px solid white', padding: '20px' }}>
         <Form.Group controlId="formUsername">
           <FloatingLabel
               label="Username"
@@ -77,7 +79,7 @@ function Login() {
             />
           </FloatingLabel>
         </Form.Group>
-        <Button className='mt-4' variant='primary' size='lg' type="submit">Login</Button>
+        <Button className='mt-4' variant='secondary' size='lg' type="submit">Login</Button>
       </Form>
     </Container>
   );

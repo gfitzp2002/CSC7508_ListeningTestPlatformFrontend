@@ -64,7 +64,7 @@ const Leaderboard = () => {
                 {selectedCategory && (
                 <>  
                     <Row>
-                        <Container><h2 className='mb-4 mt-4 text-center'>{selectedCategory}</h2></Container>
+                        <Container><h2 className='mb-4 mt-4 text-center'>Top Scorers for : {selectedCategory}</h2></Container>
                     
                     </Row>            
                     
@@ -72,8 +72,8 @@ const Leaderboard = () => {
                         <thead>
                             <tr>
                                 <th>Username</th>
-                                <th>Score</th>
-                                <th>Submitted Date Time</th>
+                                <th>Scored</th>
+                                <th>Since....</th>
                             </tr>
                         </thead>
                         <tbody>

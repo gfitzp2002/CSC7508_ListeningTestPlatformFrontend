@@ -4,6 +4,7 @@ import AudioPlayer from '../components/AudioPlayer';
 import { getAudioDescription } from '../service/AudioService';
 import Answer from '../components/Answer';
 import '../styles/myStyles.css';
+import '../index.css';
 import { QuizContext } from '../context/QuizContext';
 import QuestionResponse from '../models/QuestionResponse';
 
@@ -65,62 +66,75 @@ function Question({questionData}) {
     const questionDescription = getAudioDescription(questionData, false);
 
     return (
-        <Container className='text-center mb-3'>
+        <Container className='text-center mb-3 roboto-black'>
             <Row>
                 <Col>
                     {alert.show && (
                         <Alert variant={alert.variant} onClose={() => setAlert({ ...alert, show: false })} >
-                    {alert.message}
-                </Alert>
-            )}
+                            {alert.message}
+                        </Alert>
+                    )}
                 </Col>
             </Row>
             <Row>
-                <Col>
-                    <Card className='mb-4'>
-                        <Card.Header>
-                            <h4>This is {referenceDescription}</h4>
-                        </Card.Header>
-                        <Card.Body >
-                            <div id='audio-buttons' className='mt-3'>
-                                <AudioPlayer 
-                                    audioFilename={referenceAudioFile}
-                                    isPlaying={currentAudio.audioFilename === referenceAudioFile && currentAudio.audioPlayer === 'reference'}
-                                    togglePlay={() => togglePlay(referenceAudioFile, 'reference')}
-                                 /> 
-                            </div>  
-                    </Card.Body>
+                <Col lg='3'>                 
+                    <Card className="mb-4">
+                        <Card.Body>
+                            <Card.Text >Source: {questionData.soundSource}</Card.Text>
+                                <hr />
+                                {questionData.referenceText !== "No Change" ? (
+                                <>
+                                    <Card.Text >{questionData.referenceText}</Card.Text>
+                                    <hr />
+                                </>
+                                ) : null}
+                            
+                            <AudioPlayer 
+                                audioFilename={referenceAudioFile}
+                                isPlaying={currentAudio.audioFilename === referenceAudioFile && currentAudio.audioPlayer === 'reference'}
+                                togglePlay={() => togglePlay(referenceAudioFile, 'reference')}
+                            /> 
+                        </Card.Body>
                     </Card>
                 </Col>
-            </Row>
-            <Row>
-                <Col>
-                    <Card className='mb-4'>
-                        <Card.Header>
-                            <h4>Here is {questionDescription}...</h4>
-                        </Card.Header>
-                        <Card.Body >
-                            <div id='audio-buttons' className='mt-3'>
-                            <AudioPlayer 
-                                    audioFilename={questionAudioFile}
-                                    isPlaying={currentAudio.audioFilename === questionAudioFile && currentAudio.audioPlayer === 'question'}
-                                    togglePlay={() => togglePlay(questionAudioFile, 'question')}
-                                 />  
-                            </div>   
+   
+    
+                <Col lg='9' className='d-flex flex-column'>
+                    <Card className="mb-4 flex-grow-1">
+                           <Card.Body className='d-flex flex-column justify-content-lg-end' >
+                            <Row>
+                                <Card.Text className='roboto-black'><h4>Play this....</h4></Card.Text>
+                                <hr />
+                                <Card.Text className='roboto-black'><h4>... then answer the question below</h4></Card.Text>
+   
+                            </Row>
+                            <Row>
+                                <AudioPlayer 
+                                        audioFilename={questionAudioFile}
+                                        isPlaying={currentAudio.audioFilename === questionAudioFile && currentAudio.audioPlayer === 'question'}
+                                        togglePlay={() => togglePlay(questionAudioFile, 'question')}
+                                /> 
+                            </Row>
                         </Card.Body>
-                    </Card> 
-                </Col> 
+                    </Card>              
+                </Col>
             </Row>
+
             <Row>
                 <Col>
-                    <Card>
+                    <Card className='p-2'>
+
                         <Card.Body>
-                            <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} />
-                        </Card.Body> 
+  
+                            <Row>
+                                <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} sourceName={questionData.soundSource} />
+                            </Row>
+                        </Card.Body>          
                     </Card>
                     
                 </Col>
             </Row>
+
         </Container>
     );
     }
