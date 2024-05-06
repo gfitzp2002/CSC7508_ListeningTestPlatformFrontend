@@ -10,9 +10,9 @@ import { AuthProvider } from './context/AuthContext';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <AuthProvider>
+    <AuthProvider >
       <Container  fluid>
-        <App />
+        <App style={{ background: 'linear-gradient(to bottom, #03045e, #023e8a)'}}/>
       </Container>
     </AuthProvider>
   </React.StrictMode>

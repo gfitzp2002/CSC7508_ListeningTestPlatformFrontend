@@ -1,39 +1,62 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Spinner, Card, Button, ListGroup } from 'react-bootstrap';
-import { Globe, Twitter, Instagram, Facebook } from 'react-bootstrap-icons';
+import { Container, Row, Col, Spinner, Card, Button, ListGroup, Modal, CloseButton } from 'react-bootstrap';
+import { Twitter, Instagram, Facebook } from 'react-bootstrap-icons';
 import defaultProfileImage from '../images/profile.png';
 import { getUserProfile } from '../service/UserService';
+import { useParams } from 'react-router-dom';
+import UpdateProfile from './UpdateProfile';
+import { useAuth } from '../context/AuthContext';
 
 const ProfilePage = () => {
   const [userProfile, setUserProfile] = useState(null);
-  const imageUrl = 'http://localhost:8080/assets/profileImages/'
+  const [showUpdateProfile, setShowUpdateProfile] = useState(false);
+  const imageUrl = 'http://localhost:8080/assets/profileImages/';
+  const { username: routeUsername } = useParams();
+  const { username: authUsername } = useAuth();
 
-    // Effect to fetch user profile data when the component mounts
-    useEffect(() => {
-      // Retrieve username from local storage
-      const username = localStorage.getItem('username'); // Get username from local storage in the browser 
-      if (username) {
-        const fetchData = async () => {
-          const profileData = await getUserProfile(username);
-          if(profileData){
-            setUserProfile(profileData);
-          }          
 
-        };
-        fetchData();
+  const fetchUserProfile = async () => {
+    try {
+      const profileData = await getUserProfile(routeUsername);
+      console.log("Profile page username - " + routeUsername );
+      if(profileData){
+        setUserProfile(profileData);
         console.log(JSON.stringify(userProfile));
       }
-    }, []);
+    } catch (error) {
+      console.error('Error fetching user profile data:', error);
+    }
+  }
 
+    // Effect to fetch user profile data when the component mounts
+  useEffect(() => {
+    if (routeUsername) {
+      fetchUserProfile();
+      }     
+  }, [routeUsername]);
+
+    useEffect(() => {
+      if (userProfile) {
+        console.log("User profile updated:", userProfile);
+      }
+    }, [userProfile]);
+
+    const handleEditClick = () => {
+      setShowUpdateProfile(true);
+    };
   
+    const handleCloseUpdateProfile = () => {
+      setShowUpdateProfile(false);
+      fetchUserProfile();
+    };
 
   return (
-    <Container style={{ background: 'linear-gradient(to top, #03045e, #023e8a)', borderRadius: "10px", border: '1px solid #FFFFFF'}} className="mt-5 text-center lato-regular">
+    <Container style={{ background: 'linear-gradient(to top, #03045e, #023e8a)', borderRadius: "10px", border: '3px solid #fe7e13'}} className="mt-5 text-center roboto-black">
       {userProfile ? (
       <Container className="mt-5">
         <Row>
           <Col lg="4">
-            <Card className="mb-4">
+            <Card className="mb-4" style={{border: '3px solid #fe7e13'}}>
               <Card.Body className="text-center ">
                 <Card.Img
                   src={userProfile?.profileImage ? `${imageUrl}${userProfile.profileImage}` : defaultProfileImage} 
@@ -43,15 +66,18 @@ const ProfilePage = () => {
                   fluid
                 />
                 <p className="text-muted mb-1">{userProfile.personalInfo.username}</p>
-                <p className="text-muted mb-4">Location info.. ?</p>
+    
                 <div className="d-flex justify-content-center mb-2">
-                  <Button>Follow</Button>
-                  <Button variant="outline" className="ms-1">Message</Button>
+                  {userProfile && userProfile.personalInfo.username === authUsername && (
+                    <Button onClick={handleEditClick} className="edit-button" size="sm">
+                      Edit Profile
+                    </Button>
+                  )}
                 </div>
               </Card.Body>
             </Card>
 
-            <Card className="mb-4 mb-lg-0">
+            <Card className="mb-4 mb-lg-0" style={{border: '3px solid #fe7e13'}}>
               <Card.Body className="p-0">
                 <ListGroup flush className="rounded-3">
                   <ListGroup.Item className="d-flex justify-content-between align-items-center p-3">
@@ -71,7 +97,7 @@ const ProfilePage = () => {
             </Card>
           </Col>
           <Col lg="8">
-            <Card className="mb-4">
+            <Card className="mb-4" style={{border: '3px solid #fe7e13'}}>
               <Card.Body>
                 <Row>
                   <Col sm="3">
@@ -93,14 +119,14 @@ const ProfilePage = () => {
                 <hr />
                </Card.Body>
             </Card>
-            <Card className="mb-4">
+            <Card className="mb-4" style={{border: '3px solid #fe7e13'}}>
               <Card.Body>
                 <Row>
-                  <Col sm="3">
+                  <Col sm="3" >
                     <Card.Text className="text-muted">Total Points</Card.Text>
                   </Col>
                   <Col sm="9">
-                    <Card.Text >{userProfile.quizStats.totalPoints}</Card.Text>
+                    <Card.Text className='star-background'>{userProfile.quizStats.totalPoints}</Card.Text>
                   </Col>
                 </Row>
                 <hr />
@@ -143,6 +169,7 @@ const ProfilePage = () => {
                </Card.Body>
             </Card>
           </Col>
+
         </Row>
       </Container>
       ) : ( 
@@ -152,6 +179,15 @@ const ProfilePage = () => {
              </Spinner>
         </Container>
       )}
+     {/* Render UpdateProfile as a Modal */}
+     <Modal show={showUpdateProfile} onHide={handleCloseUpdateProfile} >
+        <Modal.Header style={{ backgroundColor: '#03045e', border:'none'}}>
+        <CloseButton aria-label="Hide" variant='white' onClick={handleCloseUpdateProfile}/>
+        </Modal.Header>
+        <Modal.Body style={{backgroundColor: '#03045e'}}>
+          <UpdateProfile userProfile={userProfile} onClose={handleCloseUpdateProfile} />
+        </Modal.Body>
+      </Modal>
     </Container>
   );
 };

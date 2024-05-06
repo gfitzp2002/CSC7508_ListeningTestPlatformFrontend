@@ -2,13 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import { getLoginHistory, calculateDaysSinceLastLogin } from '../service/AdminService';
 import { MessageContext } from '../context/MessageContext';
 import { Button, Table, Form, Container, Col, Row, Badge} from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 
 const UserLoginHistory = () => {
     const [username, setUsername] = useState('');
     const [loginHistory, setLoginHistory] = useState([]);
     const [displayResults, setDisplayResults] = useState(false);
     const [daysSinceLogin, setDaysSinceLogin] = useState(null);
+    const [error, setError] = useState(null);
     const { showToast } = useContext(MessageContext); 
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (loginHistory.length > 0) {
@@ -32,7 +35,9 @@ const UserLoginHistory = () => {
     } catch (error) {
         console.log('handleSubmit catchblock entered');
         if(error.response && error.response.status === 403) {
-            showToast('You must have administrator access rights for this function');
+            setError('You must have administrator access rights for this function');
+        }else {
+            setError('An error occurred while fetching data');
         }
         handleReset();
     }
@@ -42,12 +47,21 @@ const UserLoginHistory = () => {
     setLoginHistory([]);
     setDisplayResults(false);
   };
+  
+    // Check if error occurred
+    if (error) {
+    return (
+        <Container className='d-flex justify-content-center align-items-center'  style={{color:'white'}}>
+            <h1>{error}</h1>
+        </Container>
+    
+)}
 
   return (
-    <Container className='text-center mt-4'>
+    <Container className='text-center mt-4' style={{color: 'white'}}>
         {!displayResults && (
         <Row>
-            <Container className='mb-4'><h3>Search for a user to view their log in history..</h3></Container>    
+            <Container className='mb-4' ><h3 style={{fontSize:'2em'}}>Search for a user to view their log in history..</h3></Container>    
             <Col md={6}>
                 <Form>                
                     <Form.Group controlId="formUsername">                    
@@ -62,7 +76,14 @@ const UserLoginHistory = () => {
             </Col>
             <Col md={6}>
                 <Button variant="primary" onClick={handleSubmit}>Get Login History</Button>
-            </Col>                    
+            </Col> 
+            <Row className='mt-4'>
+                <Col md={4}></Col>
+                <Col md={4}>
+                    <Button variant="primary" size="lg" onClick={() => navigate('/admin-panel')}>Back</Button>
+                </Col>
+                <Col md={4}></Col>
+            </Row>                   
         </Row>
         )}
         {displayResults && ( 

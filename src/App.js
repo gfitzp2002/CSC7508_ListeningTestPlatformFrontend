@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import NavBar from './components/NavBar';
-import { Container, Image, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 import { MessageProvider } from './context/MessageContext';
 import { useAuth } from './context/AuthContext';
 import { BrowserRouter } from 'react-router-dom';
@@ -17,16 +17,15 @@ function App() {
     <BrowserRouter>
       <MessageProvider>
         <QuizProvider>
-          <Container className="App" >
+          <Container className="App">
             <Row className="text-center">
-                <header>
-                 
+                <header>                 
                   {isLoggedIn && <NavBar />}
                 </header>
             </Row>
-            <Row>
+            <Row >
                 <main>
-                  <Container className="d-flex align-items-center mb-3">
+                  <Container className="d-flex align-items-center">
                     <AppRoutes />
                   </Container>
                 </main>

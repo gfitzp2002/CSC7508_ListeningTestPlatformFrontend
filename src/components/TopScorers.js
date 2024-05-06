@@ -1,30 +1,35 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Table, Container, Col, Row, Dropdown, DropdownButton } from 'react-bootstrap';
-import { getLeadersBoardData } from '../service/AdminService'; 
-import { MessageContext } from '../context/MessageContext';
+import { getTopScorersData } from '../service/AdminService'; 
 import { getCategories } from '../service/QuizService';
 
-const Leaderboard = () => {
+const TopScorers = () => {
     const [topScores, setTopScores] = useState();
     const [isLoading, setIsLoading] = useState(true);
     const [ maxResults, setMaxResults ] = useState(3); 
     const [selectedCategory, setSelectedCategory] = useState(null);
     const [categories, setCategories] = useState([]);
-    const { showToast } = useContext(MessageContext);
+    const [error, setError] = useState(null);
 
-    //useing Promise.all due to race conditions causing intermittent errors with two different endpoint requests
+    //using Promise.all due to race conditions causing intermittent errors with two different endpoint requests
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [categoriesData, topScoresData] = await Promise.all([
                     getCategories(),
-                    getLeadersBoardData(maxResults)
+                    getTopScorersData(maxResults)
                 ]);
                 setCategories(categoriesData);
                 setTopScores(topScoresData);
-                setIsLoading(false);
             } catch (error) {
                 console.error('Error fetching data:', error);
+                if (error.response && error.response.status === 403) {
+                    setError('You must have administrator access rights for this function');
+                } else {
+                    setError('An error occurred while fetching data');
+                }
+            } finally {
+                setIsLoading(false);
             }
         };
 
@@ -35,25 +40,36 @@ const Leaderboard = () => {
     ? topScores.filter((entry) => entry.category === selectedCategory)
     : topScores;
 
+ 
+    // Check if error occurred
+    if (error) {
+        return (
+            <Container className='d-flex justify-content-center align-items-center'  style={{color:'white'}}>
+                <h1   data-testid="error-message">{error}</h1>
+            </Container>        
+    )}
+    
+  
+    //Display "loading" if all required data is currently not available
     if(!categories|| isLoading || topScores == null){
         return <h1>Loading.....</h1>; 
     }
 
-
     return (
-        <Container>
+        <Container data-testid="topscorers" style={{color:"white"}}>
             <Row>
                 <Col >
                     <DropdownButton
                         id="categorySelect"
                         title="Select a Quiz Category"
                         className="mt-4"
-                        variant="success"
+                        variant="primary"
                         onSelect={(eventKey) => setSelectedCategory(eventKey)}
+                        data-testid="quiz-category-dropdown"
                     >
                         <Dropdown.Header>Categories</Dropdown.Header>
                         {categories && categories.map((category) => (
-                            <Dropdown.Item key={category.categoryId} eventKey={category.categoryName}>
+                            <Dropdown.Item data-testid="quiz-category" key={category.categoryId} eventKey={category.categoryName}>
                                 {category.categoryName}
                             </Dropdown.Item>
                         ))}
@@ -94,4 +110,4 @@ const Leaderboard = () => {
     );
 };
 
-export default Leaderboard;
+export default TopScorers;

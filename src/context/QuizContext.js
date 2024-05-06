@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
 import QuizRecord from '../models/QuizRecord';
 import { getQuiz, storeQuizRecord } from '../service/QuizService';
+import { useAuth } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const QuizContext = createContext();
 
@@ -10,6 +12,8 @@ const QuizProvider = ({ children }) => {
   const [categoryId, setCategoryId] = useState(null);
   const [quizData, setQuizData] = useState(null);
   const [isComplete, setIsComplete] = useState(false);
+  const {isLoggedIn} = useAuth();
+  const navigate = useNavigate()
 
   useEffect(() => {
     if(categoryId !== null) {
@@ -25,14 +29,14 @@ const QuizProvider = ({ children }) => {
         storeQuizRecord(quizRecord);
     }
    
-}, [questionIndex, quizData]);
+  }, [questionIndex, quizData]);
 
      // Cleanup function to reset quiz context's state
   useEffect(() => {
     return () => {
         resetQuizContext();
     };
-  }, []);
+  }, [isLoggedIn]);
 
   
   const startQuiz = async () => {
@@ -49,8 +53,9 @@ const QuizProvider = ({ children }) => {
       setIsComplete(false);
       console.log("Quiz Context startQuiz called!");
       console.log("Quiz Context Quiz Record - " + JSON.stringify(newQuizRecord));
-    }    
-    //console.log("Quiz Context, questionData: " + JSON.stringify(quizData));
+    }
+    navigate(`/quiz/${categoryId}`);    
+    console.log("Quiz Context, questionData: " + JSON.stringify(quizData));
   };
 
   const updateQuizRecord = (questionResponse) => {

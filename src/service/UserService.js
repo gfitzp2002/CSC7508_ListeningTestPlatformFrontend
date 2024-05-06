@@ -1,12 +1,14 @@
 import axios from './AxiosConfig';
 import UserProfileModel from '../models/UserProfileModel';
+import UserProfileUpdateModel from '../models/UserProfileUpdateModel';
 
-const API_URL = '/user-profile'; // Update the API URL without the username placeholder
+const PROFILE_URL = '/user-profile'; // Update the API URL without the username placeholder
 
 const getUserProfile = async (username) => {
+    console.log("getUserProfile() called");
     try {
         // Make the GET request to fetch the user profile data
-        const response = await axios.get(`${API_URL}/${username}`); // Append the username to the URL
+        const response = await axios.get(`${PROFILE_URL}/${username}`);
   
         // Destructure the response data to extract personalInfo, socialMedia, and quizStats
         const { personalInfo, socialMedia, quizStats, profileImage } = response.data;
@@ -27,4 +29,23 @@ const getUserProfile = async (username) => {
     }
 };
 
-export { getUserProfile };
+const updateUserProfile = async (username, updatedProfileData) => {
+
+    try {
+        //Make PUT request to update the profile assocaited to the username
+        const response = await axios.put(`${PROFILE_URL}/${username}/update`, updatedProfileData);
+        // Handle the response if needed
+        console.log('Profile updated successfully:', response.data);
+        return response.data; // Return the updated profile data or any other response from the server
+    } catch (error) {
+        // Handle error
+        console.error('Error updating user profile:', error);
+        throw error; // Rethrow the error to be handled by the caller
+    }
+
+};
+
+
+
+
+export { getUserProfile, updateUserProfile };

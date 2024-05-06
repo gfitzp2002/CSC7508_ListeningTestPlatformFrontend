@@ -39,7 +39,7 @@ function AudioPlayer({ audioFilename, isPlaying, togglePlay }) {
     <Container className='text-center roboto-black'>
       <audio  ref={audioRef} ></audio>
         <Button variant='primary' size="lg" className='mt-3 w-100' onClick= {handleButtonClick}>
-          {isPlaying ? 'Pause' : 'Play'}
+          {isPlaying ? 'Pause' : 'Listen'}
         </Button>      
     </Container>
   );

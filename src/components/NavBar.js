@@ -7,13 +7,17 @@ import logoImage from '../images/auralatlasLogo2small.png'
 
 function NavBar() {
 
-  const { logout } = useAuth();
- 
+  const { username, logout } = useAuth();
+  console.log("NavBar - username - " + username);
 
+  // Render nothing until username is defined
+  if (username === undefined) {
+    return null;
+  }
 
   return (
-    //<Container fluid className='text-center roboto-black'>
-      <Navbar collapseOnSelect  data-bs-theme="dark" expand="lg">
+    <Container fluid className='text-center roboto-black'>
+      <Navbar collapseOnSelect  data-bs-theme="dark" expand="lg" style={{fontSize: '2em'}}>
         <Container >
           <Navbar.Brand href="/home">
             <img
@@ -25,16 +29,15 @@ function NavBar() {
           <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link as={Link} to="/quiz-menu">Lets Play!!</Nav.Link>
-              <Nav.Link as={Link} to="/top-scores">Top Scorers</Nav.Link>
-              <Nav.Link as={Link} to="/profile-page">Profile</Nav.Link>
-              <Nav.Link href="#link">History</Nav.Link>
+              <Nav.Link as={Link} to="/leader-board">Leader Board</Nav.Link>
+              <Nav.Link as={Link} to={`/profile-page/${username}`}>Profile</Nav.Link>
               <Nav.Link onClick={() => logout()}>Log Out</Nav.Link>
-              <Nav.Link as={Link} to="/admin-panel">Admin</Nav.Link>        
+              <Nav.Link as={Link} to="/admin-panel">Admin </Nav.Link>        
             </Nav>
           </Navbar.Collapse>
         </Container>
       </Navbar>
-    //</Container>
+    </Container>
   );
 }
 

@@ -3,9 +3,9 @@ import axios from './AxiosConfig';
 const QUIZ_URL = '/quiz';
 const CATEGORY_URL = 'quiz/categories';
 const QUIZ_RECORD_URL = 'quiz/store';
+const LEADER_BOARDS = 'quiz-records/all-users/total-points-scored'
 
-const getQuiz = async (categoryId) => {
-  console.log('getQuiz() called....');
+const getQuiz = async (categoryId) => {  
   try {
     // Use query parameter to pass categoryId
     const response = await axios.get(`${QUIZ_URL}`, {
@@ -43,4 +43,16 @@ const  storeQuizRecord = async (quizRecord) => {
     }
   };
 
-export { getQuiz, getCategories, storeQuizRecord };
+  const getLeadersBoardData = async () => {
+    try {
+      const response = await axios.get(`${LEADER_BOARDS}`);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching leader board data', error.message)
+      throw error;
+    }
+
+
+  }
+
+export { getQuiz, getCategories, storeQuizRecord, getLeadersBoardData };

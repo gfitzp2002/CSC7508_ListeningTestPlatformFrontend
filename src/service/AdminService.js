@@ -1,4 +1,5 @@
 import axios from './AxiosConfig';
+import EmailTemplates from '../utils/EmailTemplates'; 
 
 //ENDPOINTS
 
@@ -12,6 +13,10 @@ const LOGIN_STATS = './login_stats';
 
 //Returns the specified number of top scores for each quiz with each object  - {username, categoryId, category, score, submittedDateTime}
 const LEADER_BOARDS = './leader_boards';
+
+//Sends a reminder email to the user to login and use the application
+const REMINDER_EMAIL = '/reminder-email';
+
 
 const getLoginHistory = async (username) => {
     try {
@@ -64,7 +69,7 @@ const getLoginHistory = async (username) => {
     }
 };
 
-  const getLeadersBoardData = async (maxResults) => {
+  const getTopScorersData = async (maxResults) => {
     try {
         const response = await axios.get(`${LEADER_BOARDS}`, {
             params: {
@@ -80,4 +85,18 @@ const getLoginHistory = async (username) => {
 
   };
 
-  export { getLoginHistory, getInactiveUsers, getLoginStats, getLeadersBoardData, calculateDaysSinceLastLogin };
+  const sendReminderEmail = async (username) => {
+    try {
+        const response = await axios.post(`${REMINDER_EMAIL}`, {
+            username: username,
+            emailTemplate: EmailTemplates.reminderEmailTemplate
+        })
+        return response.data;
+    } catch (error) {
+        console.error('Error sending reminder email', error.message);
+        console.log('Error', error);
+        throw error;
+    }
+  };
+
+  export { getLoginHistory, getInactiveUsers, getLoginStats, getTopScorersData, calculateDaysSinceLastLogin, sendReminderEmail };
