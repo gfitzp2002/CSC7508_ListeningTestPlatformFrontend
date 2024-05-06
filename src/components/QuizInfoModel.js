@@ -5,6 +5,7 @@ import ReactMarkdown from 'react-markdown';
 function QuizInfoModal({show, onHide, description}) {
   return (
     <Modal
+      data-testid="quiz-info-modal" 
       show={show}
       onHide={onHide}
       size="lg"
@@ -14,7 +15,7 @@ function QuizInfoModal({show, onHide, description}) {
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
           Instructions
-        </Modal.Title>
+        </Modal.Title> 
       </Modal.Header>
       <Modal.Body>
         <ReactMarkdown>{description}</ReactMarkdown>

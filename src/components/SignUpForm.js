@@ -5,83 +5,30 @@ import UserModel from '../models/UserModel';
 import SignUpService from '../service/SignUpService';
 import { useNavigate } from 'react-router-dom';
 import { MessageContext } from '../context/MessageContext';
-import logoImage from '../images/auralatlasLogo2small.png'
+import logoImage from '../images/auralatlasLogo2small.png';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
 
 function SignUpForm() {
-  const [userData, setUserData] = useState(new UserModel('', '', '', '', ''));
-  const [confirmPassword, setConfirmPassword] = useState('');
   const navigate = useNavigate()
   const { showToast } = useContext(MessageContext);
 
-  const handleUsernameChange = (e) => {
-      setUserData((prevUserData) => ({
-      ...prevUserData,
-      username: e.target.value,
-      }));
-  };
-  const handleUserForenameChange = (e) => {
-    setUserData((prevUserData) => ({ 
-      ...prevUserData, 
-      userForename: e.target.value 
-    }));
-  };
+  // validation schema using Yup
+  const validationSchema = Yup.object().shape({
+    username: Yup.string().required('Please enter a username.'),
+    userForename: Yup.string().required('Please enter your forename.'),
+    userSurname: Yup.string().required('Please enter your surname.'),
+    userEmail: Yup.string().email('Please enter a valid email address.').required('Please enter your email address.'),
+    password: Yup.string().required('Please enter a password.'),
+    confirmPassword: Yup.string().oneOf([Yup.ref('password'), null], 'Passwords must match.').required('Please confirm your password.'),
+  });
+  
 
-  const handleUserSurnameChange = (e) => {
-      setUserData((prevUserData) => ({ 
-        ...prevUserData, 
-        userSurname: e.target.value 
-      }));
-  };
 
-  const handleUserEmailChange = (e) => {
-      setUserData((prevUserData) => ({ 
-        ...prevUserData, 
-        userEmail: e.target.value 
-      }));
-  };
-
-  const handlePasswordChange = (e) => {
-      setUserData((prevUserData) => ({
-      ...prevUserData,
-      password: e.target.value,
-      }));
-  };
-
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-      // Check for blank fields
-      if (!userData.username) {
-        showToast('Please enter a username.');
-        return;
-      } else if (!userData.userForename) {
-        showToast('Please enter your forename');
-        return;
-      } else if (!userData.userSurname) {
-        showToast('Please enter your surname');
-        return;
-      }else if (!userData.userEmail) {
-        showToast('Please enter your email address');
-        return;
-      } else if (!userData.password) {
-        showToast('Please enter a password.');
-        return;
-      } else if (!confirmPassword) {
-        showToast('Please confirm your password.');
-        return;
-      }
-      //check passwords match
-    if (userData.password !== confirmPassword) {
-      console.error('Passwords do not match');
-      showToast('Your passwords do not match!');
-      return; 
-    }
+  const handleSubmit = async (values, { setSubmitting }) => {
 
     try {
-      const response = await SignUpService.signUp(userData);
+      const response = await SignUpService.signUp(values);
       console.log('Account successfully created', response);
       //handle redirect 
       showToast('Your account has been successfully created, please log in.');
@@ -94,8 +41,11 @@ function SignUpForm() {
       } else {
         showToast('There has been an error creating your account, please check your details and try again.');
       }
+    } finally {
+      setSubmitting(false);
     }
   };
+
 
   return (
     <Container  className="d-flex flex-column align-items-center">
@@ -105,82 +55,139 @@ function SignUpForm() {
         </Link>
       </Row>
       <Row>
+      <Formik
+        initialValues={{
+          username: '',
+          userForename: '',
+          userSurname: '',
+          userEmail: '',
+          password: '',
+          confirmPassword: ''
+        }}
+        validationSchema={validationSchema}
+        onSubmit={handleSubmit}
+      >
+      {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting }) => (
       <Form onSubmit={handleSubmit} className='d-flex flex-column' style={{ borderRadius: '10px',border: '1px solid white', padding: '20px' }}>
         <Form.Group controlId="formUsername">
-            <FloatingLabel label="Username" className="mt-3 mb-3">
+            <FloatingLabel 
+              label="Username" 
+              className="mt-3 mb-3"
+              validationState={touched.username && errors.username ? 'error' : null}
+            >
               <Form.Control
                   type="text"
                   placeholder="Enter username"
-                  value={userData.username}
-                  onChange={handleUsernameChange}
+                  name="username"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.username && !!errors.username}
               />
+              <Form.Control.Feedback type="invalid">{errors.username}</Form.Control.Feedback>
             </FloatingLabel>
         </Form.Group>
 
         <Row>
           <Col>
         <Form.Group controlId="formUserForename">
-          <FloatingLabel label="Forename" className="mt-3 mb-3">
+          <FloatingLabel 
+            label="Forename" 
+            className="mt-3 mb-3"
+            validationState={touched.userForename && errors.userForename ? 'error' : null}
+          >
             <Form.Control
                 type="text"
                 placeholder="Enter forename"
-                value={userData.userForename}
-                onChange={handleUserForenameChange}
+                name= "userForename"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.userForename && !!errors.userForename}
             />
+            <Form.Control.Feedback type="invalid">{errors.userForename}</Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
         </Col>
         <Col>
         <Form.Group controlId="formUserSurname">
-          <FloatingLabel label="Surname" className="mt-3 mb-3">
+          <FloatingLabel 
+            label="Surname" 
+            className="mt-3 mb-3"
+            validationState={touched.userSurname && errors.userSurname ? 'error' : null}
+          >
             <Form.Control
                 type="text"
                 placeholder="Enter surname"
-                value={userData.userSurname}
-                onChange={handleUserSurnameChange}
+                name= "userSurname"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.userSurname && !!errors.userSurname}
             />
+            <Form.Control.Feedback type="invalid">{errors.userSurname}</Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
         </Col>
         </Row>
         <Form.Group controlId="formUserEmail">
-          <FloatingLabel label="Email" className="mt-3 mb-3">
+          <FloatingLabel 
+            label="Email" 
+            className="mt-3 mb-3"
+            validationState={touched.userEmail && errors.userEmail ? 'error' : null}
+          >
             <Form.Control
                 type="email"
                 placeholder="Enter email"
-                value={userData.userEmail}
-                onChange={handleUserEmailChange}
+                name= "userEmail"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.userEmail && !!errors.userEmail}
             />
+            <Form.Control.Feedback type="invalid">{errors.userEmail}</Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
         <Row>
           <Col>
-        <Form.Group controlId="formPassword">
-          <FloatingLabel label="Password" className="mt-3 mb-3">
-            <Form.Control
-                type="password"
-                placeholder="Enter password"
-                value={userData.password}
-                onChange={handlePasswordChange}
-            />
-          </FloatingLabel>
-        </Form.Group>
+          <Form.Group controlId="formPassword">
+            <FloatingLabel 
+              label="Password"
+              className="mt-3 mb-3"
+              validationState={touched.password && errors.password ? 'error' : null}
+            >
+              <Form.Control
+                  type="password"
+                  placeholder="Enter password"
+                  name= "password"
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  isInvalid={touched.password && !!errors.password}
+              />
+              <Form.Control.Feedback type="invalid">{errors.password}</Form.Control.Feedback>
+            </FloatingLabel>
+          </Form.Group>
         </Col>
         <Col>
         <Form.Group controlId="formConfirmPassword">
-          <FloatingLabel label="Confirm Password" className="mt-3 mb-3">
+          <FloatingLabel 
+            label="Confirm Password" 
+            className="mt-3 mb-3"
+            validationState={touched.confirmPassword && errors.confirmPassword ? 'error' : null}
+          >
             <Form.Control
                 type="password"
                 placeholder="Confirm password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
+                name= "confirmPassword"
+                onChange={handleChange}
+                onBlur={handleBlur}
+                isInvalid={touched.confirmPassword && !!errors.confirmPassword}
             />
+            <Form.Control.Feedback type="invalid">{errors.confirmPassword}</Form.Control.Feedback>
           </FloatingLabel>
         </Form.Group>
         </Col>
         </Row>
         <Button className='mt-4' variant='secondary' type="submit">Sign Up</Button>
       </Form>
+      )}
+      </Formik>
       </Row>
     </Container>
   );

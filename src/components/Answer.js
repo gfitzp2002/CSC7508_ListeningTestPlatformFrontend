@@ -1,8 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { QuizContext } from '../context/QuizContext';
-import { MessageContext } from '../context/MessageContext';
 import EarAnimation from './EarAnimation';
-import { Card, Form, Button, Row, Col, ListGroup } from 'react-bootstrap';
+import { Card, ListGroup } from 'react-bootstrap';
 import '../styles/myStyles.css';
 import '../index.css';
 
@@ -24,8 +23,7 @@ function Answer({ answers, correctAnswer, onSubmission, sourceName }) {
       // Display a message to tell user they must choose an answer 
       alert('Please select an answer');
       return;
-    }
-    
+    }    
     // Check if the selected answer is correct and call the callback function
     const isCorrectAnswer = selectedAnswer === correctAnswer.answerText;
     //show animation
@@ -47,22 +45,19 @@ function Answer({ answers, correctAnswer, onSubmission, sourceName }) {
     }
   }
 
-
-
   return (
     
-    <Card className='roboto-black'>
+    <Card className='roboto-black' style={{border: '3px solid #fe7e13'}} >
       <Card.Header>      
-        <h4>{getAnswerInstruction(categoryId, sourceName)}</h4>
+        <h4 data-testid='answer-instruction'>{getAnswerInstruction(categoryId, sourceName)}</h4>
       </Card.Header>
-      <Card.Body>
-        <Row>
+      <Card.Body >  
 
-            <ListGroup className="list-group-flush" >
+            <ListGroup className="list-group-flush"  >
                 {answers.map((answer) => (
                     <ListGroup.Item
                         variant="light" 
-                        key={answer.answerId} 
+                        key={answer.answerText} 
                         action 
                         onClick={() => handleSubmit(answer.answerText)}
                         as="button"
@@ -72,7 +67,7 @@ function Answer({ answers, correctAnswer, onSubmission, sourceName }) {
                 ))}
             </ListGroup>
 
-        </Row>
+       
       </Card.Body>
         {showAnimation !== null && <EarAnimation isCorrect={showAnimation} />}
     </Card>

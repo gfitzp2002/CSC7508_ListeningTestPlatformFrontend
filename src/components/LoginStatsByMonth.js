@@ -2,17 +2,29 @@ import React, { useState, useEffect, useContext } from 'react';
 import { getLoginStats } from '../service/AdminService';
 import { MessageContext } from '../context/MessageContext';
 import { Button, Table, Form, Container, Col, Row, Badge} from 'react-bootstrap';
+import  {useNavigate } from 'react-router-dom';
 
 const LoginStatsByMonth = () => {
 
     const [loginStats, setLoginStats] = useState([]);
     const { showToast } = useContext(MessageContext); 
+    const [error, setError] = useState(null);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
         const fetchLoginStats = async () => {
-            const fetchedStats = await getLoginStats();
-            setLoginStats(fetchedStats);
+            try {
+                const fetchedStats = await getLoginStats();
+                setLoginStats(fetchedStats);
+            } catch(error) {
+                if(error.response && error.response.status === 403) {
+                    setError('You must have administrator access rights for this function');
+                }else {
+                    setError('An error occurred while fetching data');
+                }
+            }
+            
         };
 
         fetchLoginStats();
@@ -36,13 +48,25 @@ const LoginStatsByMonth = () => {
         console.log("Groups - " + JSON.stringify(groups));
         return groups;
     }, {});
+
+    
+    // Check if error occurred
+    if (error) {
+        return (
+            <Container className='d-flex justify-content-center align-items-center'  style={{color:'white'}}>
+                <h1>{error}</h1>
+            </Container>
+        
+    )}
       
     const years = [...new Set(loginStats.map((entry) => entry.year))];  
 
     const renderTableForYear = (year) => {
         // Get unique months from data for the given year
         const months = [...new Set(loginStats.filter(entry => entry.year === year).map(entry => entry.month))];
-        
+        console.log("months - " + JSON.stringify(months));
+        months.sort(); 
+        console.log("months - " + JSON.stringify(months));
         return (
           <Table striped bordered hover key={year}>
             <thead>
@@ -67,9 +91,10 @@ const LoginStatsByMonth = () => {
           </Table>
         );
       };
+
     
     return (
-        <Container className='text-center mt-4'>
+        <Container className='text-center mt-4' style={{color: "white"}}>
             <main>
                 <Row className='mt-4'>
                 {years.map(year => (
@@ -81,7 +106,7 @@ const LoginStatsByMonth = () => {
                 </Row>
                 <Row className='mt-4'>
                     <Col>
-                        <Button variant="primary">Back</Button>
+                        <Button variant="primary" onClick={() => navigate('/admin-panel')}>Back</Button>
                     </Col>
                 </Row>
             </main>

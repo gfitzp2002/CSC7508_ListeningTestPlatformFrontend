@@ -17,21 +17,18 @@ function LoginOverlay({ showModal, handleClose }) {
         <Modal.Header style={{ backgroundColor: '#03045e', border:'none'}}>
             <CloseButton aria-label="Hide" variant='white' onClick={handleClose}/>
         </Modal.Header>
-        <Modal.Body style={{ backgroundColor: '#03045e'}}>
-            
+        <Modal.Body style={{ backgroundColor: '#03045e'}}>            
             <Tabs
                 defaultActiveKey="login"
                 className="mb-3"
                 justify
             >
-                <Tab eventKey="login" title="Sign In">
-                    <Login />
-                </Tab>
-                <Tab eventKey="signUpForm" title="Sign Up">
-                    <SignUpForm />
-                </Tab>
-
-
+              <Tab eventKey="login" title="Sign In">
+                  <Login />
+              </Tab>
+              <Tab eventKey="signUpForm" title="Sign Up">
+                  <SignUpForm />
+              </Tab>
             </Tabs>
         </Modal.Body>
       </Modal>

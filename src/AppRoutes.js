@@ -10,9 +10,10 @@ import ProtectedRoute from './utils/ProtectedRoute';
 import UserLoginHistory from './components/UserLoginHistory';
 import AdminPanel from './components/AdminPanel';
 import LoginStatsByMonth from './components/LoginStatsByMonth';
-import Leaderboard from './components/LeaderBoard';
+import LeadersBoard from './components/LeadersBoard';
 import InactiveUsers from './components/InactiveUsers';
 import ProfilePage from './components/ProfilePage';
+import TopScorers from './components/TopScorers';
 
 const AppRoutes = () => {
 
@@ -51,7 +52,7 @@ const AppRoutes = () => {
             } 
           />
           <Route 
-            path="/profile-page" 
+            path="/profile-page/:username" 
             element={
               <ProtectedRoute redirectTo="/">
                  <ProfilePage />
@@ -110,7 +111,15 @@ const AppRoutes = () => {
             path="/top-scores" 
             element={
               <ProtectedRoute redirectTo="/">
-                <Leaderboard />
+                <TopScorers />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/leader-board" 
+            element={
+              <ProtectedRoute redirectTo="/">
+                <LeadersBoard />
               </ProtectedRoute>
             } 
           />

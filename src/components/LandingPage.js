@@ -10,15 +10,16 @@ function LandingPage() {
   const handleCloseModal = () => setShowModal(false);
 
   return (
-    <Container className='justify-content-center' style={{maxHeight: '100vh'}} fluid>
-        <Row className="justify-content-center mt-5">
+    <Container className='d-flex justify-content-center align-items-center' style={{minHeight: '100vh'}} >
+        <Row className="justify-content-center text-center mt-5">
                 <Image 
                   src={logoImage} 
                   alt="Aural Atlas logo" 
-                  className='atlasMainLogo' 
+                  className='atlasMainLogo img-fluid' 
                   onClick={handleOpenModal} 
                   style={{ cursor: 'pointer' }}
-                  roundedCircle />
+                   />
+                  <h4 className="roboto-regular" style={{color:"white"}}>Click to enter</h4>
         </Row>
         <LoginOverlay showModal={showModal} handleClose={handleCloseModal}/>
     </Container>

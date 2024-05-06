@@ -10,10 +10,10 @@ function Scoreboard ({score}) {
     
 
     return (
-      <Container className='text-center'>
+      <Container className='text-center' data-testid='scoreboard'>
         <h2>Score</h2>
         <Container>
-        <h1><Badge bg="light" text="dark" style={scoreboardStyle}>{score}</Badge></h1>
+        <h1 style={{ fontSize: '4rem' }}><Badge bg="light" text="dark" style={scoreboardStyle}>{score}</Badge></h1>
         </Container>
       </Container>
       );

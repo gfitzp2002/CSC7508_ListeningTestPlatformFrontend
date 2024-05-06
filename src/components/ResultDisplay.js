@@ -4,7 +4,9 @@ import { Check, X } from 'react-bootstrap-icons';
 
 function ResultDisplay({results}){
     if (!results || results.length === 0) {
+      console.log("results - " + results);
         return <p>No results to display</p>;
+        
       }
     
       return (
@@ -24,7 +26,7 @@ function ResultDisplay({results}){
                   <td>{index + 1}</td>
                   <td>{result.correctAnswer}</td>
                   <td>{result.submittedAnswer}</td>
-                  <td>{result ? (
+                  <td>{result.isCorrect ? (
                     <Check className='text-success' />
                   ) :(
                     <X className='text-danger' />

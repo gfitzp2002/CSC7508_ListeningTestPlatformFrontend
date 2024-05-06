@@ -6,10 +6,11 @@ const AuthContext = createContext(null);
 export const AuthProvider = ({ children }) => {
     const [authState, setAuthState] = useState({
       token: localStorage.getItem('userToken'),
-      expiry: localStorage.getItem('tokenExpiry') ? new Date(parseInt(localStorage.getItem('tokenExpiry'), 10)) : null,
+      expiry: localStorage.getItem('tokenExpiry') ? 
+              new Date(parseInt(localStorage.getItem('tokenExpiry'), 10)) : null,
       username: localStorage.getItem('username'),
       isLoggedIn: false,
-      intervalId: null
+      intervalId: null,
     });
       
     useEffect(() => {
@@ -44,7 +45,7 @@ export const AuthProvider = ({ children }) => {
       localStorage.setItem('tokenExpiry', expiry);
       localStorage.setItem('username', username);
       const intervalId = startTokenRefreshTimer(logout);
-      setAuthState({ token, expiry, isLoggedIn: true, intervalId });
+      setAuthState({ token, expiry, username, isLoggedIn: true, intervalId });
     };
   
     const logout = () => {
@@ -56,8 +57,9 @@ export const AuthProvider = ({ children }) => {
         console.log("Logout called");
       }
       setAuthState({ token: null, expiry: null, username:null, isLoggedIn: false, intervalId: null });
-      
+    
     };
+
 
   return (
     <AuthContext.Provider value={{ ...authState, login, logout }}>

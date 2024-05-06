@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState} from 'react';
 import { Container, Card, Col, Row, Alert } from 'react-bootstrap';
 import AudioPlayer from '../components/AudioPlayer';
-import { getAudioDescription } from '../service/AudioService';
 import Answer from '../components/Answer';
 import '../styles/myStyles.css';
 import '../index.css';
@@ -61,25 +60,22 @@ function Question({questionData}) {
     const referenceAudioFile = questionData.referenceAudioFilename + questionData.referenceAudioFiletype; 
     const questionAudioFile = questionData.questionAudioFilename + questionData.questionAudioFiletype; 
 
-    //get audio clip descriptions
-    const referenceDescription = getAudioDescription(questionData, true);
-    const questionDescription = getAudioDescription(questionData, false);
-
     return (
-        <Container className='text-center mb-3 roboto-black'>
+        <Container className='text-center roboto-black' data-testid='question-component'>
             <Row>
                 <Col>
                     {alert.show && (
-                        <Alert variant={alert.variant} onClose={() => setAlert({ ...alert, show: false })} >
+                        <Alert variant={alert.variant} onClose={() => setAlert({ ...alert, show: false })} style={{fontSize:'1.5em'}} >
                             {alert.message}
                         </Alert>
                     )}
                 </Col>
             </Row>
+
             <Row>
-                <Col lg='3'>                 
-                    <Card className="mb-4">
-                        <Card.Body>
+                <Col lg='3' className='d-flex flex-column'>                 
+                    <Card className="mb-1 flex-grow-1" style={{border: '3px solid #fe7e13'}}>
+                        <Card.Body  className='d-flex flex-column justify-content-lg-end'>
                             <Card.Text >Source: {questionData.soundSource}</Card.Text>
                                 <hr />
                                 {questionData.referenceText !== "No Change" ? (
@@ -93,19 +89,18 @@ function Question({questionData}) {
                                 audioFilename={referenceAudioFile}
                                 isPlaying={currentAudio.audioFilename === referenceAudioFile && currentAudio.audioPlayer === 'reference'}
                                 togglePlay={() => togglePlay(referenceAudioFile, 'reference')}
+                                data-testid='reference-audio-player'
                             /> 
                         </Card.Body>
                     </Card>
                 </Col>
-   
-    
                 <Col lg='9' className='d-flex flex-column'>
-                    <Card className="mb-4 flex-grow-1">
+                    <Card className="mb-1 flex-grow-1" style={{border: '3px solid #fe7e13'}}>
                            <Card.Body className='d-flex flex-column justify-content-lg-end' >
                             <Row>
-                                <Card.Text className='roboto-black'><h4>Play this....</h4></Card.Text>
+                                <h5 className='roboto-black'>Play this....</h5>
                                 <hr />
-                                <Card.Text className='roboto-black'><h4>... then answer the question below</h4></Card.Text>
+                                <h5 className='roboto-black'>... then answer the question below</h5>
    
                             </Row>
                             <Row>
@@ -113,6 +108,7 @@ function Question({questionData}) {
                                         audioFilename={questionAudioFile}
                                         isPlaying={currentAudio.audioFilename === questionAudioFile && currentAudio.audioPlayer === 'question'}
                                         togglePlay={() => togglePlay(questionAudioFile, 'question')}
+                                        data-testid='question-audio-player'
                                 /> 
                             </Row>
                         </Card.Body>
@@ -120,21 +116,11 @@ function Question({questionData}) {
                 </Col>
             </Row>
 
-            <Row>
+            <Row className='mb-2' data-testid='answers'>
                 <Col>
-                    <Card className='p-2'>
-
-                        <Card.Body>
-  
-                            <Row>
-                                <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} sourceName={questionData.soundSource} />
-                            </Row>
-                        </Card.Body>          
-                    </Card>
-                    
-                </Col>
+                    <Answer answers={questionData.answers} correctAnswer={questionData.correctAnswer} onSubmission={handleSubmission} sourceName={questionData.soundSource} data-testid='answer-component' />
+                </Col>      
             </Row>
-
         </Container>
     );
     }
